@@ -1,0 +1,279 @@
+
+\documentclass[a4paper, 10pt]{article}
+\usepackage{a4wide}
+\usepackage {amsmath}
+\usepackage {graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+
+\lhead{} 
+\chead{} 
+\rhead{\bfseries Intégration Numérique} 
+\lfoot{JC Toussaint}
+%\cfoot{} 
+%\rfoot{\thepage}
+
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,                        % Use MATLAB
+        frame=single,                           % Single frame around code
+        basicstyle=\small\ttfamily,             % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+        keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+        identifierstyle=,                       % Nothing special about identifiers
+                                                % Comments small dark green courier
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},             % Strings are purple
+        showstringspaces=false,                 % Don't put marks in string spaces
+        tabsize=5,                              % 5 spaces per tab
+        %
+        %%% Put standard MATLAB functions not included in the default
+        %%% language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+        %
+        %%% Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        %%% Put user defined functions here
+        morekeywords=[3]{FindESS, homework_example},
+        %
+        morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+        numbers=left,                           % Line numbers on left
+        firstnumber=1,                          % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue},          % Line numbers are blue
+        stepnumber=5                            % Line numbers go in steps of 5
+        }
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\title{Intégration numérique sur un maillage éléments finis 2D - Application à la pluviométrie}
+
+%\author{Jean-Christophe Toussaint\\
+%  Phelma\\
+%\texttt{jean-christophe.toussaint@phelma.grenoble-inp.fr}
+%}
+\date{\today}
+ 
+\maketitle
+
+Le but du B.E. est d'estimer la quantité totale de pluie tombée sur une région $D$ à partir
+de mesures de pluviométrie faites sur un ensemble de noeuds distincts répartis sur $D$.
+
+\section{Intégration d'une grandeur interpolée sur un domaine 2D}
+
+Le domaine $D$ est ici bidimensionnel. 
+On construit à partir des noeuds d'échantillonnage de la grandeur $Q(x,y)$, un 
+maillage éléments finis à base de triangles (Fig. ~\ref{geo}).
+
+
+
+\begin{figure}[ht]
+\begin{center}$
+\begin{array}{c}
+\includegraphics[scale=1, width=6cm]{mesh_tri.pdf} 
+%\includegraphics[scale=1, width=6cm]{mesh_quad.pdf} 
+\end{array}$
+\end{center}
+\label{geo} 
+\caption{décomposition du domaine en éléments finis}
+\end{figure}
+
+%Soit $D$ un domaine de calcul unidimensionnel se limitant à un segment de droite. 
+%On désire calculer l'intégrale $I=\int\limits_{D}\, Q(x)\, dx$ en décomposant le domaine
+%de calcul $D$ en NE éléments finis de type P1(Fig. ~\ref{geo}).  
+
+La description d'un maillage en éléments finis se fait, de manière générale, par 
+l'intermédiaire de deux tableaux, la table des coordonnées et la table de connectivité.
+
+La première contient les positions des noeuds. Ici, on lui adjoint
+ les valeurs échantillonnées de $Q(x,y)$ aux noeuds:
+\begin{table}[h!] 
+\centering 
+\begin{tabular}{|c|c | c |c|}
+  \hline
+  noeud $i$ & abscisse $x_i$& abscisse $y_i$ & $Q_i$ \\
+  \hline
+  1 & $x_1$ & $y_1$ & $Q_1$ \\
+\vdots   & \vdots   & \vdots & \vdots \\
+  $i$ & $x_{i}$ & $y_{i}$ & $Q_{i}$ \\
+\vdots   & \vdots   & \vdots & \vdots \\
+  10 & $x_{10}$ & $y_{10}$ & $Q_{10}$ \\
+  \hline
+\end{tabular}
+\label{tab:hresult} 
+\caption{table de coordonnées et des valeurs échantillonnées} %title of the table
+\end{table}
+
+La seconde table dite de connectivité associe à chaque élément $e$ la liste des NBN noeuds
+lui appartenant:
+
+\begin{table}[h!] 
+\centering 
+\begin{tabular}{|c|c|c| c |}
+  \hline
+  élément $e$ &  I & II & III \\
+  \hline
+1&  1	 &4	 &2 \\
+ 2 & 2	 &4	 &5 \\
+ 3 & 2	 &5	 &3 \\
+ 4 & 5	 &6	 &3 \\
+ 5 & 4	 &7	 &8 \\
+ 6 & 4	 &8	 &5 \\
+ 7 & 5	 &8	 &9 \\
+ 8 & 5	 &9	 &6 \\
+ 9 & 7	 &10 &8 \\
+ 10 & 8	 &10 &9 \\
+  \hline
+\end{tabular}
+\label{tab2:hresult} 
+\caption{table de connectivité pour le maillage en triangles} %title of the table
+\end{table}
+
+
+La quantité de pluie intégrée, notée ci-après $I$, s'écrit comme une somme d'intégrales élémentaires sur chaque élément $e$:
+\begin{equation}
+I=\iint\limits_{D}\, Q(x, y)\, dx\, dy=\sum_{e=1}^{NE} \iint\limits_{e}\, Q_e(x, y)\, dx \, dy=\sum_{e=1}^{NE} I_e
+\end{equation}
+
+Pour calculer l'intégrale élémentaire $I_e$ sur un élément donné $e$, on lui associe
+ un élément de référence.
+
+\begin{equation}
+I_e=\iint\limits_D {Q_e(x,y)\,dx\,dy} = \iint\limits_{e_{ref}} Q(x(u,v), y(u,v))\, \det J(u,v)\, {du}\,  dv
+\end{equation}
+
+où
+$
+\det J(u,v)=
+\left|
+\begin{array}{rr} \partial_u x  & \partial_v x \\ \partial_u y  & \partial_v y \\ \end{array}
+\right|  
+$.\\
+
+Pour simplifier, $Q(x(u,v), y(u,v))$ dans l'élément $e$, est noté dans la suite $Q_e(u,v)$.
+
+Il faut ensuite définir la transformation géométrique $T$ pour passer de l'élément de référence à l'élément réel.
+La plus simple est une transformation isoparamétrique :  les mêmes polynômes de Lagrange sont utilisés
+pour  l'interpolation de toute grandeur à l'intérieur de l'élément  et pour la transformation géométrique.
+
+\begin{equation}
+\left\{ {\begin{array}{*{20}{c}}
+ x(u,v)=\sum_{ie=I}^{NBN} x_{ie}\, \alpha_{ie}(u,v) \\ \\
+y(u,v)=\sum_{ie=I}^{NBN} y_{ie}\, \alpha_{ie}(u,v)  
+\end{array}} \right.
+\end{equation}
+
+Pour effectuer l'intégration, on a besoin d'estimer $Q_e(u,v)$ en tout point de l'élément de référence. 
+On l'approxime en effectuant une interpolation linéaire à partir de ses valeurs aux noeuds de l'élément.
+Autrement dit:
+\begin{equation}
+Q_e(u,v)=\sum_{ie=I}^{NBN} Q_{ie}\, \alpha_{ie}(u,v)
+\end{equation}
+
+L'estimation de l'intégrale élémentaire $I_e$ est calculée numériquement en utilisant la
+méthode de Gauss:
+
+\begin{equation}
+I_e=\iint\limits_{e_{ref}} Q_e(u,v)\, detJ(u,v)\,  du \,  dv= \sum_{k=1}^{NPI} Q_e(u_k, v_k)\, w_k \, detJ(u_k, v_k)
+\end{equation}
+
+Après remplacement de $Q_e(u,v)$ par sa valeur interpolée, on obtient :
+
+\begin{equation}
+I_e= \sum_{k=1}^{NPI} \left( \sum_{ie=1}^{NBN} Q_{ie}\, \alpha_{ie}(u_k, v_k) \right)\, w_k \, detJ(u_k, v_k)
+\label{Ie_expr}
+\end{equation}
+
+Finalement, l'intégrale sur tout le domaine $D$ est obtenue après assemblage de toutes
+les intégrales élémentaires $I_e$ :
+
+\begin{equation}
+I = \sum_{e=1}^{NE} I_e
+\end{equation}
+
+\section{Implémentation}
+\subsection {Structure de données}
+
+La structure $ \tt{fem }\rm$ contient la description complète du maillage. $ \tt{fem.NP }\rm$  et   $ \tt{fem.NE }\rm$ retournent respectivement le nombre total de noeuds et le nombre d'éléments. 
+
+La table de coordonnées est implémentée sur la forme du tableau $ \tt{fem.noeud(1:fem.NP)} \rm$.
+L'abscisse du noeud $\tt{np \in [1,   fem.NP \rm]}$ est donné par $ \tt{fem.noeud(np).x} \rm$ et son
+ordonnée par $ \tt{fem.noeud(np).y} \rm$
+
+Le tableau $\tt{fem.elt(1:fem.NE)} \rm$ contient pour chaque élément $ \tt{ne}\rm$ :
+
+\begin{itemize}
+\renewcommand\labelitemi{\textbullet}
+\item sa dimension $\tt{fem.elt(ne).TYP} \rm$,
+\item  son nombre de noeuds $\tt{fem.elt(ne).NBN} \rm$,
+\item le numéro de région $\tt{fem.elt(ne).NRG} \rm$ auquelle l'élément $ne$ appartient  et
+\item  sa table de connectivité $\tt{fem.elt(ne).ind(ie)} \rm$ avec $\tt{ie \in [1,   fem.elt(ne).NBN \rm]}$
+\end{itemize} 
+
+Le tableau $\tt{fem.sol(1:fem.NP)} \rm$ contient l'échantillonnage de la grandeur à intégrer, en chaque noeud
+du maillage.
+
+Les données nécessaires pour le programme d'intégration, c'est à dire le maillage et les valeurs de la grandeur aux noeuds sont contenues dans le fichier d'extension $\tt{.pro} \rm$. La lecture est effectuée par la fonction
+$\tt{lecture\_probleme.m} \rm$
+
+\matlabscript{lecture_probleme}{lecture des données du problème}
+
+\matlabscript{triangles.pro}{fichier 'triangles.pro'}
+
+\subsection {polynomes de Lagrange sur le triangle à trois noeuds}
+
+Pour chaque élément $\tt{ne} \rm$, la fonction $\tt{polynomes\_T3.m} \rm$ retourne une structure
+de données $\tt{gauss} \rm$. Celle-ci contient comme données membres: le nombre de points d'intégration
+(de Gauss) $\tt{NPI} \rm$ et pour chacun d'eux, la valeur du déterminant jacobien et le poids associé.
+
+\matlabscript{polynomes_T3}{polynomes de Lagrange}
+
+\section {Travail à réaliser}
+
+\matlabscript{integrale}{integrale élémentaire}
+
+Les taches à réaliser sont :
+
+\begin{enumerate}
+\item  Comprendre la structure du fichier $\tt{triangles.pro} \rm$ et les fonctions fournies.
+\item Comprendre la fonction $\tt{integrale.m} \rm$ qui effectue le calcul de l'intégrale élémentaire
+selon l'équation \eqref{Ie_expr}.
+\item Compléter la fonction  $\tt{solution.m} \rm$ qui somme les contributions de toutes les intégrales
+élémentaires.
+\item Exécuter le programme principal $\tt{PRECIPITATION\_main.m} \rm$ et modifier le fichier 
+$\tt{triangles.pro} \rm$ pour valider le développement que vous avez réalisé.
+\item  La fonction $\tt{polynomes\_T3.m} \rm$ utilise $3$ points de Gauss, est-ce ici bien nécessaire?
+Justifier.
+\item  Changer la connectivité du maillage en supprimant le segment $[2, 4]$ et en le remplaçant
+par $[1, 5]$. Modifier en conséquence le fichier 'mesh.pro'. Obtient-on la même de l'intégrale? Justifier.
+\end{enumerate} 
+
+\matlabscript{PRECIPITATION_main}{programme principal}
+
+\end{document}
+

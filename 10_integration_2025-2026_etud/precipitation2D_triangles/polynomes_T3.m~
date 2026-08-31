@@ -1,0 +1,122 @@
+function [gauss]=polynomes_T3(fem,ne)
+% Calcul des polynomes aux points d'integration
+% Polynomes dans un element triangulaire a l ordre 1
+% Calcul du determinant de la matrice Jacobienne aux k
+% points d integration --> gauss.detJ
+
+% Nombre de noeuds dans l'element e
+NBN=fem.elt(ne).NBN;
+
+% Nombre de points d integration
+NPI=1;
+
+switch NPI
+case 1
+    % Coordonnees du point d integration
+	u   = [1.0/3.0] ;
+	v   = [1.0/3.0] ;
+    % poids de Gauss
+	pds = [0.5] ;
+case 3
+    % Coordonnees des 3 points d integration
+    u   = [1./6. 2./3. 1./6.];
+    v   = [1./6. 1./6. 2./3.];
+    % poids de Gauss
+    pds = [1./6. 1./6. 1./6.];
+end
+    
+%calcul des polynomes de Lagrange et de leurs gradients 
+% aux points d integration
+for k=1:NPI
+   % Polynomes aux noeuds I,II et III
+   alpha(1, k)=1-u(k)-v(k);
+   alpha(2, k)=u(k);
+   alpha(3, k)=v(k);  
+end;
+
+dalpha_du=zeros(NBN,NPI);
+dalpha_dv=zeros(NBN,NPI);
+
+% derivees polynomes de Lagrange P1 dans l'element de reference
+for k=1:NPI
+    % dalpha_du(ie, k) derivee par rapport a u 
+    % du polynome de Lagrange calculee au point de Gauss k
+    dalpha_du(1, k)=-1;
+    dalpha_du(2, k)=+1;
+    dalpha_du(3, k)= 0;
+
+    % dalpha_dv(ie, k) derivee par rapport a v 
+    % du polynome de Lagrange calculee au point de Gauss k
+    dalpha_dv(1, k)=-1;
+    dalpha_dv(2, k)= 0;
+    dalpha_dv(3, k)=+1;
+end;
+
+%=======================================================================
+%Calcul du determinant de la matrice Jacobienne aux points d integration
+%Stockage dans la structure gauss.detJ
+%=======================================================================
+
+% J : matrice Jacobienne [J]
+J=zeros(2,2,NPI);
+% detJ : determinant de [J]
+detJ=zeros(NPI,1);
+
+for ie=1:NBN 
+    e=fem.elt(ne);
+    iglobal=e.ind(ie);
+    xp(ie)  = fem.noeud(iglobal).x;
+    yp(ie)  = fem.noeud(iglobal).y;
+end
+
+for k=1:NPI
+    % nombre de noeuds dans l element ne
+    NBN=fem.elt(ne).NBN;
+    dx_du = 0.;
+    dx_dv = 0.;
+
+    dy_dv = 0.;
+    dy_du = 0.;
+
+    for ie = 1:NBN
+        dx_du = dx_du + dalpha_du(ie,k)*xp(ie);
+        dx_dv = dx_dv + dalpha_dv(ie,k)*xp(ie);
+
+        dy_du = dy_du + dalpha_du(ie,k)*yp(ie);	 
+        dy_dv = dy_dv + dalpha_dv(ie,k)*yp(ie);	 
+    end
+    
+    % Matrice Jacobienne transposee
+    J=[dx_du dy_du;
+       dx_dv dy_dv];
+
+    % Calcul du determinant de la matrice Jacobienne aux k
+    detJ(k)=det(J);    
+    
+end;
+
+gauss.NPI=NPI; 		% nombre de points de Gauss 
+gauss.detJ=detJ;	% tableau = valeur de detJ(k) k numero du point de Gauss 
+gauss.pds=pds;		% tableau = valeur de w(k)
+gauss.alpha=alpha;	% matrice = gauss.alpha(ie, k) 
+			% ie dans {I, II, III}, k dans [1, gauss.NPI]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

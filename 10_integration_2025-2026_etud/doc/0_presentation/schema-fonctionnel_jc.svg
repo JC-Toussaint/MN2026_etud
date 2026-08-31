@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="schema-fonctionnel_jc.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs2">
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="Arrow1Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend">
+      <path
+         transform="scale(0.4) rotate(180) translate(10,0)"
+         style="fill-rule:evenodd;stroke:#44b8af;stroke-width:1pt;stroke-opacity:1;fill:#44b8af;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path898" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;stroke-opacity:1;fill:#ffffff;fill-opacity:1"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path892" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Mend-0"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#44b8af;fill-opacity:1;fill-rule:evenodd;stroke:#44b8af;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path898-9"
+         inkscape:connector-curvature="0" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow1Mend-0-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend">
+      <path
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         style="fill:#b844b6;fill-opacity:1;fill-rule:evenodd;stroke:#b844b6;stroke-width:1.00000003pt;stroke-opacity:1"
+         d="M 0,0 5,-5 -12.5,0 5,5 Z"
+         id="path898-9-1"
+         inkscape:connector-curvature="0" />
+    </marker>
+  </defs>
+  <sodipodi:namedview
+     inkscape:document-rotation="0"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1001"
+     inkscape:window-width="1920"
+     showgrid="false"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="437.479"
+     inkscape:cx="-101.53551"
+     inkscape:zoom="0.49703869"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Calque 1">
+    <text
+       id="text817"
+       y="158.18478"
+       x="32.551628"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve" />
+    <text
+       id="text1858"
+       y="54.836002"
+       x="186.64679"
+       style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       xml:space="preserve" />
+    <g
+       transform="translate(0,10.099049)"
+       id="g3798">
+      <rect
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#b844b6;stroke-width:0.9595595;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2647"
+         width="94.045029"
+         height="73.352158"
+         x="57.977486"
+         y="116.12312"
+         ry="3.8775311" />
+      <g
+         id="g1427"
+         transform="translate(24.546124,4.2333335)">
+        <g
+           transform="translate(73.442934,-150.9212)"
+           id="g840">
+          <rect
+             style="opacity:1;vector-effect:none;fill:#44b8af;fill-opacity:1;stroke:none;stroke-width:0.2733905;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+             id="rect833"
+             width="72.134933"
+             height="30.229963"
+             x="10.636709"
+             y="167.23357"
+             ry="6.8799214" />
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+             x="46.683678"
+             y="177.55435"
+             id="text821"><tspan
+               sodipodi:role="line"
+               id="tspan819"
+               x="46.683678"
+               y="177.55435"
+               style="text-align:center;text-anchor:middle;stroke-width:0.264583">Lecture du dossier</tspan><tspan
+               sodipodi:role="line"
+               x="46.683678"
+               y="183.72797"
+               style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan823">Recherche des .pro (mesh)</tspan><tspan
+               sodipodi:role="line"
+               x="46.683678"
+               y="189.90158"
+               style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan829">Lecture problème</tspan></text>
+        </g>
+        <g
+           transform="matrix(0.81884159,0,0,0.81884159,-2.8946571,-91.03155)"
+           id="g883">
+          <text
+             xml:space="preserve"
+             style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+             x="53.799225"
+             y="135.58696"
+             id="text844"><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="135.58696"
+               style="font-size:5.64444px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan846">Maillage (mesh.pro)</tspan><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="141.99881"
+               style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan868">Nbr de noeud total NP</tspan><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="148.17242"
+               style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan858">Nbr de pts d'int. de Gauss (NPI)</tspan><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="154.34604"
+               style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan862">Valeur au noeud (sol)</tspan><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="160.51965"
+               style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan872">Nbr d'élément (NE)</tspan><tspan
+               sodipodi:role="line"
+               x="53.799225"
+               y="166.69325"
+               style="font-size:4.23333px;text-align:center;text-anchor:middle;stroke-width:0.264583"
+               id="tspan874">Nbr de point pour chaque élements (NBN)</tspan></text>
+        </g>
+      </g>
+      <path
+         style="opacity:1;vector-effect:none;fill:#44b8af;fill-opacity:1;stroke:#44b8af;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow1Mend)"
+         d="M 118.18692,46.433923 V 138.50792"
+         id="path887"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#44b8af;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="120.39645"
+         y="57.020157"
+         id="text1379"><tspan
+           sodipodi:role="line"
+           id="tspan1377"
+           x="120.39645"
+           y="57.020157"
+           style="text-align:start;text-anchor:start;fill:#44b8af;fill-opacity:1;stroke-width:0.264583">fem</tspan><tspan
+           sodipodi:role="line"
+           x="120.39645"
+           y="63.193768"
+           style="text-align:start;text-anchor:start;fill:#44b8af;fill-opacity:1;stroke-width:0.264583"
+           id="tspan1381">gauss</tspan></text>
+      <rect
+         style="opacity:1;vector-effect:none;fill:#44b8af;fill-opacity:1;stroke:none;stroke-width:0.15354837;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect833-2"
+         width="47.395882"
+         height="14.513306"
+         x="150.91824"
+         y="65.35833"
+         ry="3.3030276" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="174.70541"
+         y="73.993195"
+         id="text821-1"><tspan
+           sodipodi:role="line"
+           x="174.70541"
+           y="73.993195"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           id="tspan829-9">Affchage maillage</tspan></text>
+      <path
+         style="opacity:1;vector-effect:none;fill:#44b8af;fill-opacity:1;stroke:#44b8af;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow1Mend-0)"
+         d="M 170.29816,47.657964 V 65.146539"
+         id="path887-6"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#44b8af;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="176.40115"
+         y="57.020157"
+         id="text1379-9"
+         inkscape:transform-center-x="17.370413"
+         inkscape:transform-center-y="8.3923341e-06"><tspan
+           sodipodi:role="line"
+           id="tspan1377-4"
+           x="176.40115"
+           y="57.020157"
+           style="text-align:center;text-anchor:middle;fill:#44b8af;fill-opacity:1;stroke-width:0.264583">fem</tspan><tspan
+           sodipodi:role="line"
+           x="176.40115"
+           y="63.193768"
+           id="tspan1381-9" /></text>
+      <rect
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#44b8af;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect1881"
+         width="149.20802"
+         height="170.27995"
+         x="30.395988"
+         y="85.47625"
+         ry="6.5143924" />
+      <rect
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#44b8af;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect1883"
+         width="35.214649"
+         height="8.3753757"
+         x="87.392677"
+         y="82.135201"
+         ry="3.8449967" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="94.903976"
+         y="88.161705"
+         id="text1887"><tspan
+           sodipodi:role="line"
+           id="tspan1885"
+           x="94.903976"
+           y="88.161705"
+           style="stroke-width:0.264583">Solution</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#b8444b;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="106.63687"
+         y="99.161758"
+         id="text1909"><tspan
+           sodipodi:role="line"
+           id="tspan1907"
+           x="106.63687"
+           y="99.161758"
+           style="text-align:center;text-anchor:middle;fill:#b8444b;fill-opacity:1;stroke-width:0.264583">Boucle sur le nombre d'élement (ne)</tspan></text>
+      <rect
+         ry="4.7336693"
+         y="100.96745"
+         x="43.243912"
+         height="123.73357"
+         width="123.51215"
+         id="rect1911"
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#b8444b;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6, 1;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         ry="3.8449967"
+         y="111.08589"
+         x="87.392677"
+         height="8.3753757"
+         width="35.214649"
+         id="rect2639"
+         style="opacity:1;vector-effect:none;fill:#ffffff;fill-opacity:1;stroke:#b844b6;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text2643"
+         y="117.1124"
+         x="104.67685"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           y="117.1124"
+           x="104.67685"
+           id="tspan2641"
+           sodipodi:role="line">Intégrale</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#5044b8;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="104.75884"
+         y="124.25758"
+         id="text1909-4"><tspan
+           sodipodi:role="line"
+           id="tspan1907-6"
+           x="105.62701"
+           y="124.25758"
+           style="text-align:center;text-anchor:middle;fill:#5044b8;fill-opacity:1;stroke-width:0.264583">Boucle sur le nombre de </tspan><tspan
+           sodipodi:role="line"
+           x="104.75884"
+           y="130.4312"
+           style="text-align:center;text-anchor:middle;fill:#5044b8;fill-opacity:1;stroke-width:0.264583"
+           id="tspan2671">point d'intégration (npi)</tspan></text>
+      <path
+         style="opacity:1;vector-effect:none;fill:#b8444b;fill-opacity:1;stroke:none;stroke-width:0.35277778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 37.644382,128.09758 H 48.963587 L 43.303983,117.74162 Z"
+         id="path2675"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         style="opacity:1;vector-effect:none;fill:#b8444b;fill-opacity:1;stroke:none;stroke-width:0.35277778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 172.20558,131.45405 h -11.3192 l 5.6596,10.35596 z"
+         id="path2675-7"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc"
+         inkscape:transform-center-x="-17.711009"
+         inkscape:transform-center-y="-5.7901292" />
+      <rect
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#5044b8;stroke-width:1.0450809;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:6.27048532, 1.04508089;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect2695"
+         width="79.332512"
+         height="50.495819"
+         x="64.911171"
+         y="134.10558"
+         ry="1.931816" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2697"
+         d="m 61.005666,150.02169 h 7.706635 l -3.853319,-7.05081 z"
+         style="opacity:1;vector-effect:none;fill:#5044b8;fill-opacity:1;stroke:none;stroke-width:0.24018733;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         style="opacity:1;vector-effect:none;fill:#5044b8;fill-opacity:1;stroke:none;stroke-width:0.24018733;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 61.005666,150.02169 h 7.706635 l -3.853319,-7.05081 z"
+         id="path2699"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <path
+         sodipodi:nodetypes="cccc"
+         inkscape:connector-curvature="0"
+         id="path2701"
+         d="m 140.28551,142.97086 h 7.70663 l -3.85332,7.05081 z"
+         style="opacity:1;vector-effect:none;fill:#5044b8;fill-opacity:1;stroke:none;stroke-width:0.24018733;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1" />
+      <rect
+         ry="0.65576476"
+         y="149.72652"
+         x="73.481918"
+         height="17.14106"
+         width="62.826832"
+         id="rect3195"
+         style="opacity:1;vector-effect:none;fill:none;fill-opacity:1;stroke:#62b844;stroke-width:0.86911106;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:5.21466641, 0.86911106;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         id="text3222"
+         y="141.07466"
+         x="104.75884"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#62b844;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           id="tspan3220"
+           style="text-align:center;text-anchor:middle;fill:#62b844;fill-opacity:1;stroke-width:0.264583"
+           y="141.07466"
+           x="104.75884"
+           sodipodi:role="line">Boucle sur le nombre de</tspan><tspan
+           style="text-align:center;text-anchor:middle;fill:#62b844;fill-opacity:1;stroke-width:0.264583"
+           y="147.24828"
+           x="104.75884"
+           sodipodi:role="line"
+           id="tspan3226">noeuds (ie)</tspan></text>
+      <path
+         style="opacity:1;vector-effect:none;fill:#62b844;fill-opacity:1;stroke:none;stroke-width:0.28309569;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 68.825856,162.40385 h 9.08339 l -4.541697,-8.3104 z"
+         id="path2699-0"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cccc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.32269px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#62b844;fill-opacity:1;stroke:none;stroke-width:0.231572"
+         x="105.72868"
+         y="156.31573"
+         id="text3245"><tspan
+           sodipodi:role="line"
+           x="105.72868"
+           y="156.31573"
+           style="text-align:center;text-anchor:middle;fill:#62b844;fill-opacity:1;stroke-width:0.231572"
+           id="tspan3247">Interpolation des valeurs</tspan><tspan
+           sodipodi:role="line"
+           x="105.72868"
+           y="161.71909"
+           style="text-align:center;text-anchor:middle;fill:#62b844;fill-opacity:1;stroke-width:0.231572"
+           id="tspan3249">au points de Gauss</tspan></text>
+      <text
+         id="text3276"
+         y="172.9984"
+         x="104.75884"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#5044b8;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         xml:space="preserve"><tspan
+           id="tspan3274"
+           style="text-align:center;text-anchor:middle;fill:#5044b8;fill-opacity:1;stroke-width:0.264583"
+           y="172.9984"
+           x="105.62701"
+           sodipodi:role="line">Somme pour l'intégration de </tspan><tspan
+           style="text-align:center;text-anchor:middle;fill:#5044b8;fill-opacity:1;stroke-width:0.264583"
+           y="179.17201"
+           x="104.75884"
+           sodipodi:role="line"
+           id="tspan3280">Gauss et calcul surface</tspan></text>
+      <path
+         style="opacity:1;vector-effect:none;fill:#b844b6;fill-opacity:1;stroke:#b844b6;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#Arrow1Mend-0-1)"
+         d="M 105,189.49402 V 202.3248"
+         id="path887-6-3"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#b844b6;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="108.78152"
+         y="195.7466"
+         id="text3601"><tspan
+           sodipodi:role="line"
+           id="tspan3599"
+           x="108.78152"
+           y="195.7466"
+           style="fill:#b844b6;fill-opacity:1;stroke-width:0.264583">elem(ne)</tspan><tspan
+           sodipodi:role="line"
+           x="108.78152"
+           y="201.92021"
+           style="fill:#b844b6;fill-opacity:1;stroke-width:0.264583"
+           id="tspan3603">Selem(ne)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#b8444b;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="104.75884"
+         y="211.00452"
+         id="text3609"><tspan
+           id="tspan3607"
+           sodipodi:role="line"
+           x="104.75884"
+           y="211.00452"
+           style="text-align:center;text-anchor:middle;fill:#b8444b;fill-opacity:1;stroke-width:0.264583">Somme des intégrales pour chaque éléments</tspan><tspan
+           sodipodi:role="line"
+           x="104.75884"
+           y="217.17813"
+           style="text-align:center;text-anchor:middle;fill:#b8444b;fill-opacity:1;stroke-width:0.264583"
+           id="tspan3613">Somme des surfaces</tspan></text>
+      <rect
+         style="opacity:1;vector-effect:none;fill:#44b8af;fill-opacity:1;stroke:none;stroke-width:0.15354837;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:6.19999981;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+         id="rect833-2-8"
+         width="47.395885"
+         height="14.513306"
+         x="81.302055"
+         y="234.03517"
+         ry="3.3030276" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:4.93889px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+         x="105.08923"
+         y="242.67003"
+         id="text821-1-2"><tspan
+           sodipodi:role="line"
+           x="105.08923"
+           y="242.67003"
+           style="text-align:center;text-anchor:middle;stroke-width:0.264583"
+           id="tspan829-9-5">Affchage résultats</tspan></text>
+    </g>
+  </g>
+</svg>

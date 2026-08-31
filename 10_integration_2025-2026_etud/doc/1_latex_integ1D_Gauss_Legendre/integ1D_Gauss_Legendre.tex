@@ -1,0 +1,313 @@
+
+\documentclass[a4paper, 10pt]{article}
+\usepackage{a4wide}
+\usepackage {amsmath}
+\usepackage {graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{stmaryrd}
+\usepackage[T1]{fontenc}
+\usepackage{mathrsfs}
+
+\lhead{} 
+\chead{} 
+\rhead{\bfseries Intégration Numérique} 
+\lfoot{JC Toussaint}
+%\cfoot{} 
+%\rfoot{\thepage}
+
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,                        % Use MATLAB
+        frame=single,                           % Single frame around code
+        basicstyle=\small\ttfamily,             % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+        keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+        identifierstyle=,                       % Nothing special about identifiers
+                                                % Comments small dark green courier
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},             % Strings are purple
+        showstringspaces=false,                 % Don't put marks in string spaces
+        tabsize=5,                              % 5 spaces per tab
+        %
+        %%% Put standard MATLAB functions not included in the default
+        %%% language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+        %
+        %%% Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        %%% Put user defined functions here
+        morekeywords=[3]{FindESS, homework_example},
+        %
+        morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+        numbers=left,                           % Line numbers on left
+        firstnumber=1,                          % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue},          % Line numbers are blue
+        stepnumber=5                            % Line numbers go in steps of 5
+        }
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\title{Méthode de quadrature de Gauss-Legendre}
+
+%\author{Jean-Christophe Toussaint\\
+%  Phelma\\
+ %\texttt{jean-christophe.toussaint@grenoble-inp.fr}}
+\date{\today}
+ 
+\maketitle
+
+\section{Polynomes de Legendre}
+
+Le polynome de Legendre de degré $n$ est solution de l'équation différentielle suivante:
+
+\begin{equation}
+\frac{d}{du} \big[(1-u^2) \frac{d}{du} P_n(u) \big]+n(n+1) P_n(u)=0
+\label{eqdif_legendre}
+\end{equation}
+où $u \in [-1, 1]$. Il vérifie $P_n(1)=1$.
+
+On peut générer la suite des polynomes de Legendre en utilisant la formule de récurrence de Bonnet
+pour tout entier $n>0$:
+\begin{equation}
+(n+1) \; P_{n+1}(u) = (2n+1)\; u \; P_n(u) -n \; P_{n-1}(u)
+\label{recurrence}
+\end{equation}
+sachant que $P_0(u)=1$ et $P_1(u)=u$.
+
+Les  polynomes de Legendre forment une base orthogonale :
+\begin{equation}
+\langle P_m, \; P_n \rangle=\int_{-1}^{1} P_m(u) \; P_n(u)\; du = \frac{2}{2n+1}\delta_{m,n}
+\label{ortho}
+\end{equation}
+
+\begin{enumerate}
+\item Utiliser le programme Matlab {\tt main\_legendre} pour tracer $P_n(u)$ pour  $n  \llbracket  0, 3  \rrbracket$.
+\end{enumerate}
+
+\section{Polynomes de Lagrange}
+
+On veut construire un polynome de degré $n$ passant par $n+1$ points de coordonnées $(x_i, y_i)$ avec $i \in  \llbracket  0, n  \rrbracket $,
+aussi appelé interpolée. Son expression est donnée par :
+\begin{equation}
+\mathscr{I}_n(x)= \sum_{i=0}^n y_i \; L_i(x)
+\label{interpolee}
+\end{equation}
+
+où $L_i(x) = \prod_{j=0, j \ne i}^n \,\frac{ (x-x_j) }{ (x_i-x_j) }$ est le polynome de Lagrange de degré $n$ associé au point $i$.
+
+En imposant $\mathscr{I}_n(x_i) \equiv y_i$  en tout point d'échantillonnage $i$, la propriété suivante est obligatoirement vérifiée:
+\begin{equation}
+L_i(x_j)=\delta_{i,j}
+\label{unite}
+\end{equation}
+
+\textbf{Notez que les polynomes de Lagrange  forment une base mais non orthogonale.}
+
+\section{Quadrature de Gauss-Legendre}
+
+On échantillonne la fonction $f(x)$ aux abscisses $x_i$ où $i \in  \llbracket  0, n  \rrbracket $.
+On peut l'écrire sous la forme du développement suivant :
+
+\begin{equation}
+f(x) = \mathscr{I}_n(x) + R_n(x) = \sum_{i=0}^{n} L_i(x) \, f(x_i) + \left[ \prod_{i=0}^n (x-x_i) \right] \frac{f^{(n+1)}(\xi(x))}{(n+1)!}
+\label{interpol1}
+\end{equation}
+avec $\xi(x) \in [a, b]$
+où $L_i(x)$ est le polynome de Lagrange associé au noeud $i$ et $R_n(x)$ est l'erreur due à l'approximation polynomiale de $f(x)$.
+
+Le but ici est d'estimer numériquement l'intégrale $\int_a^b f(x) \; dx$ en approximant la fonction $f(x)$ par son interpolée $\mathscr{I}_n(x)$
+de degré $n$. Formellement, on peut écrire:
+
+\begin{equation}
+I=\int_a^b\, f(x)\, dx=\int_a^b\, \mathscr{I}_n(x)\, dx + \int_a^b\, R_n(x)\, dx
+\end{equation}
+
+Sans perdre en généralité, l'intervalle d'intégration $[a, b]$ peut être ramené à $[-1, 1]$ par le changement de variable suivant :
+$x = \frac{b-a}{2} \; u + \frac{a+b}{2}$ avec $u \in [-1, 1]$. On note dans la suite $g(u) = f(x(u))$.
+
+L'expression \ref{interpol1} devient alors:
+
+\begin{equation}
+g(u) =  \sum_{i=0}^{n} L_i(u) \, g(u_i) + \left[ \prod_{i=0}^n (u-u_i) \right] \frac{g^{(n+1)}(\xi(u))}{(n+1)!}
+\label{interpol2}
+\end{equation}
+avec $\xi(u) \in [-1, 1]$ où $u_i = \frac{2}{b-a}\;  (x_i-\frac{a+b}{2})$.
+
+Si on suppose maintenant que $g(u)$ est un polynome de degré $2n+1$ alors le terme $\frac{g^{(n+1)}(\xi(u))}{(n+1)!}$ sera
+de degré $n$ au plus, puisque $ \sum_{i=0}^{n} L_i(u) \, g(u_i)$ est un polynome de degré $n$ au plus et $\Pi_{i=0}^n (u-u_i)$ 
+est de degré $n+1$.
+
+Pour simplifier la lecture, on note $q_n(u) = \frac{g^{(n+1)}(\xi(u))}{(n+1)!}$ qui est un polynome de degré $n$. Alors
+\begin{equation}
+g(u) =  \sum_{i=0}^{n} L_i(u) \, g(u_i) + \left[ \prod_{i=0}^n (u-u_i) \right] q_n(u)
+\label{interpol3}
+\end{equation}
+
+\subsection{Détermination des poids et des abscisses de Gauss}
+
+Nous allons montrer qu'un choix judicieux des points d'échantillonnage permet d'annuler l'erreur d'intégration d'un polynome de degré $n$,
+représenté par le dernier terme de l'équation précédente.
+
+Pour ce faire, on intégre les deux cotés de l'équation \ref{interpol3} sur l'intervalle $[-1, 1]$, ce qui nous donne :
+
+\begin{equation}
+\int_{-1}^{1}\; g(u)\; du =  \int_{-1}^{1}\;  \sum_{i=0}^{n} L_i(u) \, g(u_i) \; du+ \int_{-1}^{1}\;  \left[ \prod_{i=0}^n (u-u_i) \right] q_n(u)\; du
+\label{interpol4}
+\end{equation}
+
+On remarque $g(u_i)$ est une constante qui peut être sortie de l'intégrale. On obtient finalement
+
+\begin{equation}
+\int_{-1}^{1}\; g(u)\; du =   \sum_{i=0}^{n} w_i\, g(u_i)  + R
+\label{interpol5}
+\end{equation}
+avec $w_i =  \int_{-1}^{1}\;  L_i(u) \; du$ est le poids de gauss associé au noeud $i$.
+Dans cette relation,  le premier terme de droite est appelée formule de quadrature et le dernier le reste $R$.
+Celui-ci s'écrit:
+
+\begin{equation}
+R = \int_{-1}^{1}\;  \left[ \prod_{i=0}^n (u-u_i) \right] q_n(u)\; du
+\label{reste}
+\end{equation}
+
+Intéressons-nous maintenant au reste.
+On développe dans un premier temps les deux polynomes $ \prod_{i=0}^n (u-u_i)$ et $q_n(u)$ sur la base des polynomes
+de Legendre. On écrit formellement :
+
+\begin{equation}
+\prod_{i=0}^n (u-u_i)= \sum_{i=0}^{n+1} b_i \; P_i(u) \text{\quad et \quad} q_n(u) = \sum_{i=0}^{n} c_i \; P_i(u)
+\label{expandR1}
+\end{equation}
+où $(b_i, \; c_i)$ sont des coefficients que l'on déterminera ci-après.
+
+L'expression développée du dernier terme de l'équation \ref{interpol5} s'écrit alors:
+
+\begin{equation}
+\int_{-1}^{1}\; \left[ \sum_{i=0}^{n}  \sum_{j=0}^{n} \; b_i\; c_j P_i(u)\; P_j(u) + \sum_{i=0}^{n}\; b_{n+1} \;c_i P_i(u) \; P_{n+1}(u) \right] \; du
+\label{expandR2}
+\end{equation}
+
+Grâce à la propriété d'orthogonalité des polynomes de Legendre, tous les termes de la forme $\; b_i\; c_j \int_{-1}^{1}\; P_i(u)\; P_j(u)\; du $
+disparaissent si $i \ne j$.
+
+L'équation \ref{expandR2} se simplifie en :
+\begin{equation}
+\int_{-1}^{1}\; \sum_{i=0}^{n}  \; b_i\; c_i \left[P_i(u) \right]^2\; \; du
+\label{expandR3}
+\end{equation}
+
+
+Sachant que les $n$ abscisses $u_i$ ne sont pas fixées a priori,
+une stratégie pour faire disparaitre ce terme d'erreur est  d'imposer que le produit suivant ne s'exprime
+qu'en fonction de $P_{n+1}(u) $ : 
+\begin{equation}
+\prod_{i=0}^n (u-u_i)= b_{n+1} \; P_{n+1}(u) .
+\label{prod1}
+\end{equation}
+Ce qui revient à faire coincider les abscisses $u_i$  pour  
+$i \in  \llbracket  0, n  \rrbracket $ avec les racines du polynome de legendre  $P_{n+1}(u) $.
+Comme les polynomes de legendre forment une base,  on en déduit que $b_i \equiv 0$ pour  
+$i \in  \llbracket  0, n  \rrbracket $.
+
+En égalisant les coefficients du monome $u^{n+1}$ avec celui du polynome  $P_{n+1}(u)$, on en déduit
+la valeur de $b_{n+1}$.
+Par exemple pour $n=3$, le coefficient du monome de plus haut degré de $P_4(u)$ est $\frac{35}{8}$, comme
+celui de $\prod_{i=0}^n (u-u_i)$ est $1$ alors on en déduit que $b_{n+1}=\frac{8}{35}$.
+
+On arrive finalement au dénouement de cette démonstration. En faisant coïncider les abscisses $u_i$ avec les zéros du 
+polynome de Legendre $P_{n+1}(u)$, le terme d'erreur de la formule de quadrature
+disparait complétement  lorsqu'on intégre une fonction polynomiale de degré $2n+1$.
+
+On obtient finalement la relation de quadrature suivante :
+\begin{equation}
+\int_{-1}^{1}\; g(u)\; du =   \sum_{i=0}^{n} w_i\, g(u_i) 
+\label{quadrature}
+\end{equation}
+
+Une analyse plus poussée [Hildebrand] permet d'établir une expression analytique pour les poids de Gauss associé au noeud $i$:
+\begin{equation}
+w_i =  \int_{-1}^{1}\;  L_i(u) \; du = \frac{2 (1-u_i^2)}{n\; [P_{n-1}(u_i)]^2}
+\label{poids}
+\end{equation}
+
+% Une référence \cite{Press:2007}
+ %\cite{Dhatt:2005}
+
+%\bibliography{biblio}
+
+\vspace{-0.5cm}
+\section{Références}
+
+\noindent Hildebrand F. B. : {\it Methods of Applied Mathematics }, ed. Dover Publications Inc., 1965.
+
+\newpage
+
+\section{Annexe}
+
+Nous allons donner les éléments pour retrouver l'expression \ref{interpol1} utilisée dans le calcul de l'erreur d'interpolation $R_n$ d'une fonction par un polynome de degré $n$.
+Comme $f(x) - P_n(x)-R_n(x)=0$ par définition, on a par conséquent :
+
+\begin{equation}
+ f(x) - P_n(x) - \left[ \prod_{i=0}^n (x-x_i) \right] q(x) =0
+\label{err1}
+\end{equation}
+
+Dans le but de déterminer $q(x)$, on construit une fonction auxiliaire qu'on note $W(t)$ définie par :
+\begin{equation}
+W(t) =  f(t) - P_n(t) - \left[ \prod_{i=0}^n (t-x_i) \right] q(x) =0
+\label{aux1}
+\end{equation}
+On remarque en particulier que $q(x)$ n'a pas été remplacé  par $q(t)$. La fonction $W(t)$ dépend en fait de $t$ et de $x$ mais
+on ne s'intéresse ici qu'aux variations liées à $t$, la valeur de $x$ étant fixée.
+
+On étudie maintenant les racines de $W(t)$. Il est évident que $W(t)$ s'annule en $t=x_0, x_1, ... , x_n$ mais aussi en $t=x$ par construction
+d'après \ref{err1}.
+
+ $W(t)$ doit être continue et dérivable pour appliquer le théorème de Rolle. Dans ce cas,  $W'(t)$ possède une racine entre chacune des
+ $n+2$ zéros de $W(t)$, donc en tout $n+1$ zéros. Si $W''(t)$ existe ce que nous allons supposer, elle présente $n$ racines et ainsi de suite
+ avec les dérivées successives de $W(t)$. Finalement $W^{(n+1)}(t)$ possède au moins une racine dans l'intervalle $[x_0, x_n]$ que l'on 
+ note $t=\xi$.
+ On obtient finalement l'identité suivante :
+ 
+\begin{equation}
+W^{(n+1)}(\xi)= 0 = \frac{d^{n+1}}{dt^{n+1}}  \left[ f(t) - P_n(t) - \left[ \prod_{i=0}^n (t-x_i) \right] q(x) \right]_{t=\xi}
+\label{aux2}
+\end{equation}
+
+d'où en développant la dérivée d'ordre $n+1$, 
+
+\begin{equation}
+q(x) = \frac{f^{(n+1)}(\xi)}{(n+1)! }   .
+\label{aux3}
+\end{equation}
+
+
+\end{document}
+

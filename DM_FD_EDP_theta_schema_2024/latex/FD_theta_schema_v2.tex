@@ -1,0 +1,310 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{a4wide}
+\usepackage {amsmath}
+\usepackage {graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{esint}
+\usepackage{bbm}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{epsfig}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\usepackage{braket}
+\usepackage{MnSymbol,wasysym}
+\usepackage{marvosym}
+\usepackage{dsfont}
+
+\def\ChoixDeVersion{corrections} % Choix de la version a compiler (corrections ou pas)
+\newcommand{\Corrections}[1]{%
+        \color{red}
+	\ifthenelse{
+		\equal{\ChoixDeVersion}{nocorrections}
+	}{CORRECTION\\ #1}{ }
+        \color{black} 
+}
+
+\lhead{} 
+\chead{} 
+\rhead{\bfseries  $DM - \theta$-schéma \Corrections{}} 
+
+\lfoot{J. C. Toussaint}
+%\cfoot{} 
+%\rfoot{\thepage}
+
+\let\vaccent=\v % rename builtin command \v{} to \vaccent{}
+\renewcommand{\v}[1]{\ensuremath{\mathbf{#1}}} % for vectors
+\newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}} 
+
+\newcommand{\grad}[1]{\gv{\nabla} #1} % for curl
+\let\divsymb=\div % rename builtin command \div to \divsymb
+\renewcommand{\div}[1]{\gv{\nabla} \cdot #1} % for divergence
+\newcommand{\curl}[1]{\gv{\nabla} \times #1} % for curl
+
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,                        % Use MATLAB
+        frame=single,                           % Single frame around code
+        basicstyle=\small\ttfamily,             % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+        keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+        identifierstyle=,                       % Nothing special about identifiers
+                                                % Comments small dark green courier
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},             % Strings are purple
+        showstringspaces=false,                 % Don't put marks in string spaces
+        tabsize=5,                              % 5 spaces per tab
+        %
+        %%% Put standard MATLAB functions not included in the default
+        %%% language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+        %
+        %%% Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        %%% Put user defined functions here
+        morekeywords=[3]{FindESS, homework_example},
+        %
+        morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+        numbers=left,                           % Line numbers on left
+        firstnumber=1,                          % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue},          % Line numbers are blue
+        stepnumber=5                            % Line numbers go in steps of 5
+        }
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\bibliographystyle{alpha}
+
+\title{Intégrateur de type $\theta$-schéma pour les équations aux dérivées partielles}
+
+\author{Jean-Christophe Toussaint\\
+%  Phelma\\
+%\texttt{jean-christophe.toussaint@phelma.grenoble-inp.fr}
+}
+\date{\today}
+ 
+
+\maketitle
+
+Ce document donne les éléments nécessaires pour construire un intégrateur de type $\theta$-schéma pour résoudre
+l'équation de la chaleur dépendante du temps et pour étudier son stabilité dans le cadre d'une approche énergétique.
+
+\section{Equation de la chaleur}
+
+Le  $\theta$-schéma est très largement utilisé pour résoudre  des équations aux dérivées partielles
+dépendantes du temps, comme l'équation de la chaleur.
+Le second membre \eqref{edo1} est alors remplacé par un terme laplacien
+qui se comporte comme un
+terme de raideur.
+
+\noindent On considère l'équateur de la chaleur dépendante du temps sans terme source:
+\begin{equation}
+\rho\ C_p \frac{\partial T}{\partial t}+ \div \gv{j}=0 \ \text{avec} \ \gv{j}=-k_{th} \grad{T}
+\label{th1}
+\end{equation}
+où $\gv{j}$ est le vecteur flux de chaleur par unité de surface et $k_{th} $ dénote la conductibilité thermique, $\rho$ la masse volumique, $C_p$ la capacité calorifique.
+
+En notant dans la suite $v=\frac{\partial T}{\partial t}$, la variation locale de température par unité de temps, l'équation \eqref{th1} devient:
+
+\begin{equation}
+\frac{\partial T}{\partial t}  = \frac{k_{th}}{\rho\; C_p } \; \Delta T 
+\label{th2orig}
+\end{equation}
+
+\noindent ou encore en introduisant un paramètre $\lambda=\frac{k_{th}}{\rho\; C_p } $
+
+\begin{equation}
+v  =  \lambda \; \Delta T
+\label{th2}
+\end{equation}
+
+\subsection{Le $\theta$-schéma:}
+
+\noindent On propose par conséquent le $\theta-$schéma suivant :
+ \begin{eqnarray}
+ T^{n+1} = T^n+ k   v^{n+\theta} +
+ \left\{ 
+\begin{array}{l l l}
+  \vartheta(k^3) \text{\, si \,} \theta=\frac{1}{2} \\
+   \\
+\vartheta(k^2) \text{\, sinon} \end{array} \right. 
+  \label{schema}
+  \end{eqnarray}
+  
+\noindent D'autre part, 
+\begin{equation}
+T \equiv T^{n + \theta}= T^n+ \theta k v^n + \vartheta(k^2)
+ \label{DLord2orig}
+\end{equation}
+
+donne une estimation de $T$ à l'instant $n+\theta$. Sans modifier la précision
+du développement,
+on remplace $v^n$ dans \eqref{DLord2orig} par $v^{n+\theta}$. 
+
+A l'instant $n+\theta$, l'équation \eqref{th2} devient:
+\begin{equation}
+v^{n + \theta}= \lambda\; \Delta (T^n+ \theta k v^{n + \theta}) + \vartheta(k^2)
+ \label{DLord2inter}
+\end{equation}
+
+Ce qui revient à résoudre une équation en  $v^{n + \theta}$ en négligeant localement
+les termes d'ordre 2 en temps. On applique la relation \eqref{schema} pour passer à 
+l'instant suivant.
+
+En résumé, le $\theta-$schéma comporte donc une étape de résolution :
+\begin{equation}
+ ( \mathds{1} -\lambda\; \theta\; k \Delta)\; v^{n + \theta} = \lambda\; \Delta T^n 
+ \label{ThschemaStep1}
+\end{equation}
+puis une étape d'évolution :
+\begin{equation}
+T^{n+1} = T^n+ k   v^{n+\theta}
+\label{ThschemaStep2}
+\end{equation}
+
+Comme le laplacien est un opérateur à valeurs propres négatives, on retrouve dans le terme
+de gauche de l'équation \eqref{ThschemaStep1}, un préfacteur jouant le rôle de filtre passe-bas. Il coupe donc les hautes
+fréquences spatiales à l'origine des instabilités des schémas numériques.
+
+ \section{Application aux différences finies}
+ 
+ Son application aux différences finies est immédiate. Après discrétisation de l'espace
+ avec une grille régulière pour simplifier, on applique à chaque noeud $p \in [1, N]$ de la grille
+ l'équation \eqref{ThschemaStep1} pour construire un système d'équations linéaires
+ et le résoudre. On applique ensuite en chaque noeud l'équation d'évolution \eqref{ThschemaStep2}. 
+ En résumé, on a:
+ \begin{eqnarray}\left\{ 
+\begin{array}{l l l}
+   ( \mathds{1} -\lambda\; \theta\; k \Delta)\; v_p^{n + \theta} = \lambda\; (\Delta T)_p^n \\
+   \\
+ T_p^{n+1} = T_p^n+ k   v_p^{n+\theta} \end{array} \right. 
+  \label{FDschema}
+  \end{eqnarray}
+
+\begin{enumerate} 
+ \item On intéresse à l'évolution de la température au cours du temps dans une plaque.
+ On suppose que l'approximation 1D est suffisante. Rappeler sous quelles conditions.
+ \item On suppose que le système est périodique : on a  $T_{0}^n=T_N^n$ et $v_{0}^n=v_N^n$ à tout instant.
+ Montrer comment l'expression discrète de l'opérateurs laplacien doit être adaptée
+  pour tenir compte de la condition de périodicité.
+ 
+ \item Développer un code simpliste mettant en oeuvre le $\theta$-schéma. Les paramètres de simulation
+ seront regroupés dans une structure {\tt fd}.   Préciser la distribution initiale de température
+ que vous avez choisie.
+ On définira les fonctions :
+ \begin{enumerate} 
+ \item  {\tt lap1(N)} retournant la matrice associée à l'opérateur laplacien pour une grille de pas unitaire, tenant
+ compte de la périodicité,
+ \item {\tt solver(fd)} gérant la boucle sur le temps et l'affichage 
+ de la distribution de température à chaque itération.
+ \item {\tt fd\_main} programme principal appelant les fonctions décrites ci-dessus.
+  \end{enumerate}
+
+% L'utilisateur pourra appliquer des conditions de dirichlet ou de Neumann à gauche et à droite.
+% {\it Noter que l'archive compressée au format ZIP du répertoire contenant le code source
+% vous sera demandée lors du DS de méthodes numériques.}
+ \item Résumer les résultats obtenus avec une de vos simulations que vous pensez pertinente 
+ en précisant bien les paramètres de simulation et les conditions aux limites.
+\end{enumerate} 
+
+ \subsection{Stabilité énergétique du $\theta$-schéma et précision}
+
+Dans [Euvrard], l'étude de stabilité énergétique en différences finies fait
+appel à des astuces de majoration sur des expressions discrètes et est par conséquent
+plus difficile à appréhender que celle au sens de Von Neumann.
+
+On propose de développer une approche plus progressive en difficultés.
+On se place d'abord dans la limité continue, on définit une co-énergie proportionnelle
+à  $E \propto \int_0^L T(x, t)^2 \; dx$ pour un plaque homogène d'épaisseur $L$, infiniment haute.
+{\it Pour simplifier, on suppose que des conditions périodiques sont appliquées
+en $x=0$ et $x=L$.}
+
+\begin{enumerate} 
+
+\item Dans la limite continie, calculer la variation de la co-énergie avec le temps, $\frac{dE}{dt}$ et montrer qu'elle
+est monotone décroissante.
+
+\item Après discrétisation en différences finies, la température est évaluée sur une grille de pas $h$.
+Les dérivées spatiales sont estimées à partir des développement de Taylor de la température.
+Donner l'expression discrète de la variation $\Delta E = E_{n+1}-E_{n}$ avec une précision
+en $\vartheta{(h^3)}$.
+
+\item Pour éviter de traiter les noeuds extrémités comme des noeuds particuliers, on applique des conditions périodiques telles que $T_0 \equiv T_N$.
+
+On montrera que la somme avec le laplacien discret s'écrit en fait, sous la forme 
+$\sum_{j=1}^{N} (T_{j+1}^{n+\theta}-T_j^{n+\theta})^2$ où $L= N\, h$.
+
+\item Pour $\theta \in ]\frac{1}{2}, \; 1]$, montrer que le schéma \eqref{FDschema} est dissipatif
+ et donc inconditionnellement stable. Sa précision est d'ordre 1 en temps.
+  
+ \item Pour $\theta =\frac{1}{2}$, montrer qu'il est d'ordre 2 en temps. 
+ Le schéma est dit semi-implicite.
+ 
+\item Montrer que, pour $\theta \in [0,\;  \frac{1}{2}[$, le schéma est dissipatif à condition
+de choisir le pas de temps $k<k_c$ où $k_c$ est une valeur critique dont on donnera
+l'expression. Sa précision est d'ordre 1 en temps.
+On utilisera l'inégalité suivante $(a-b)^2 \leq 2\; (a^2 + b^2)$ pour définir une expression de $k_c$.
+
+Commenter et comparer la valeur de $k_c$ pour $\theta=0$ avec celle obtenue par une
+analyse de stabilité de Von Neumann.
+
+ \item  Implémenter le calcul de $\Delta E$ dans votre code de calcul.
+ \item On veut vérifier numériquement la condition à imposer sur $\theta$
+ pour observer la stabilité. Proposer un ensemble de simulations en reportant
+ bien la liste des paramètres pertinents sous la forme d'un tableau.
+ 
+ \item Le cas intéressant est $\theta = \frac{1}{2}$, 
+seule cette valeur particulière de $\theta$ permet d'atteindre une précision est d'ordre $2$ en temps.
+Proposez un protocole permettant de vérifier que le schéma est d'ordre 2 en temps.
+ Appliquez-le en précisant les paramètres de simulation.
+
+\end{enumerate}
+
+
+% Une référence \cite{Press:2007}
+ %\cite{Dhatt:2005}
+
+%\bibliography{biblio}
+
+\section{Conclusion}
+           
+Le  $\theta$-schéma est très largement utilisé pour résoudre  des équations différentielles
+et les équations aux dérivées partielles
+dépendantes du temps, comme les équations de diffusion. Il permet de cumuler précision
+d'ordre 2 et stabilité inconditionnelle en imposant $\theta = \frac{1}{2}$. \\
+ 
+\vspace{-0.5cm}
+\section{Références}
+
+\noindent Euvrard D. : {\it Résolution numérique des équations aux dérivées partielles de la physique, de la mécanique et des sciences de l'ingénieur : Différences finies, éléments finis, problèmes en domaines non bornés }, ed. Masson, 1994.
+
+\end{document}
+

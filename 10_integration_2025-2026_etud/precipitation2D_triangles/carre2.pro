@@ -1,0 +1,17 @@
+NOEUDS
+4
+1	0.0     0.0
+2 	1.0     0.0
+3 	1.0     1.0
+4 	0.0 	1.0
+
+ELEMENTS_SURFACIQUES_&_LINEIQUES
+2
+2	3	1   1   2   4	
+2	3	1	2   3   4
+
+VALEURS_AUX_NOEUDS
+0
+1
+0
+1

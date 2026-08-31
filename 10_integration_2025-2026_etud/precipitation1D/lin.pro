@@ -1,0 +1,19 @@
+NOEUDS
+4
+1	0.0		
+2 	0.3
+3 	0.5
+4 	1.0
+
+ELEMENTS_LINEIQUES
+3
+1	2	1	1	2
+1	2	1	2	3
+1	2	1	3	4
+
+VALEURS_AUX_NOEUDS
+0.0
+0.3
+0.5
+1.0
+

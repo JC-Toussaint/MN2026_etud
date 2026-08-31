@@ -1,0 +1,335 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{a4wide}
+\usepackage {amsmath}
+\usepackage{amssymb}
+\usepackage {graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage{algorithmicx} 
+\usepackage{algpseudocode} 
+\usepackage{multicol}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{esint}
+\usepackage{bbm}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{epsfig}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\usepackage{braket}
+\usepackage{MnSymbol,wasysym}
+\usepackage{marvosym}
+\usepackage{dsfont}
+
+
+\lhead{} 
+\chead{} 
+\rhead{\bfseries Matlab} 
+\lfoot{Q \& JC}
+%\cfoot{} 
+%\rfoot{\thepage}
+
+% This is the color used for MATLAB comments below
+\definecolor{MyDarkGreen}{rgb}{0.0,0.4,0.0}
+
+% For faster processing, load Matlab syntax for listings
+\lstloadlanguages{Matlab}%
+\lstset{language=Matlab,                        % Use MATLAB
+        frame=single,                           % Single frame around code
+        basicstyle=\small\ttfamily,             % Use small true type font
+        keywordstyle=[1]\color{Blue}\bf,        % MATLAB functions bold and blue
+        keywordstyle=[2]\color{Purple},         % MATLAB function arguments purple
+        keywordstyle=[3]\color{Blue}\underbar,  % User functions underlined and blue
+        identifierstyle=,                       % Nothing special about identifiers
+                                                % Comments small dark green courier
+        commentstyle=\usefont{T1}{pcr}{m}{sl}\color{MyDarkGreen}\small,
+        stringstyle=\color{Purple},             % Strings are purple
+        showstringspaces=false,                 % Don't put marks in string spaces
+        tabsize=5,                              % 5 spaces per tab
+        %
+        %%% Put standard MATLAB functions not included in the default
+        %%% language here
+        morekeywords={xlim,ylim,var,alpha,factorial,poissrnd,normpdf,normcdf},
+        %
+        %%% Put MATLAB function parameters here
+        morekeywords=[2]{on, off, interp},
+        %
+        %%% Put user defined functions here
+        morekeywords=[3]{FindESS, homework_example},
+        %
+        morecomment=[l][\color{Blue}]{...},     % Line continuation (...) like blue comment
+        numbers=left,                           % Line numbers on left
+        firstnumber=1,                          % Line numbers start with line 1
+        numberstyle=\tiny\color{Blue},          % Line numbers are blue
+        stepnumber=5                            % Line numbers go in steps of 5
+        }
+
+% Includes a MATLAB script.
+% The first parameter is the label, which also is the name of the script
+%   without the .m.
+% The second parameter is the optional caption.
+\newcommand{\matlabscript}[2]
+  {\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1]{#1.m}\end{itemize}}
+
+\pagestyle{fancy}
+
+\begin{document}
+
+\bibliographystyle{alpha}
+
+\title{Bases en programmation Matlab}
+
+\author{Quentin Rafhay - Jean-Christophe Toussaint\\
+%  Phelma\\
+%\texttt{jean-christophe.toussaint@phelma.grenoble-inp.fr}
+}
+\date{\today}
+ 
+\maketitle
+
+
+L'ensemble des exercices, fourni ci-après, est à réaliser en totale autonomie et constitue le socle
+de base en Matlab que vous devez assimiler.
+
+\section{Exercice : multiplication matricielle}
+
+Matlab est un langage adapté à l'algèbre linéaire et aux calculs matriciels.
+
+\begin{enumerate} 
+ \item En utilisant toutes les fonctionnalités de Matlab, développer une fonction mult(A,B)
+retournant le produit matricielle $R=A\;B$. 
+\item Pour aider l'utilisateur, compléter la fonction précédente avec un commentaire
+en début du fichier mult.m, donnant un mode d'emploi sommaire.
+\item Pour professionnaliser votre code, insérer un bloc permettant de vérifier la compatibilité
+des tailles des matrices. Utiliser les fonctions {\tt size} et {\tt error}. Cette dernière permet stopper 
+le déroulement de votre programme.
+\item Développer une nouvelle fonction  mult2(A, B) retournant le produit matriciel $R=A\;B$, dans laquelle
+l'opération est faite de manière explicite sous la forme de boucles sur les éléments des matrices.
+\item En plaçant les fonctions {\tt tic} et {\tt toc} respectivement, avant et après l'appel d'une fonction, Matlab
+retourne le temps de calcul CPU. Comparer l'éfficacité des différentes implémentations proposées
+en vous limitant aux matrices carrées.
+Utiliser la fonction {\tt rand} pour générer des matrices de grande taille. 
+\end{enumerate} 
+
+\section{Exercice : manipulation de tableaux}
+
+On considère un tableau $A$ unidimensionnel de taille $N=1000$ voire plus. 
+\begin{enumerate} 
+\item générer le tableau (ligne) $A$ avec la fonction Matlab {\tt rand}.
+\item Développer une fonction min\_max(A) retournant les valeurs minimale et maximale.
+
+\item Dévélopper une fonction tri\_bulle(A) permettant de trier le tableau de manière croissante.
+La méthode la plus simple dite de "tri par bulle" consiste à permuter si nécessaire, deux éléments successifs
+du tableau et à recommencer dès le début du tableau tant qu'il n'est pas trié.
+
+\item  Hoare a inventé en 1962, une méthode de type "diviser pour régner"  permettant de trier un
+tableau en $N \ln N$ opérations. Son algorithme s'écrit :
+
+\begin{algorithmic}[1]
+   \begin{multicols}{2}
+\Function{Tri\_rapide}{$T,g,d$}
+    \If {$g < d$}
+        \State $ip, T \gets \Call{Partition}{$T, g, d$} $
+         \State $T \gets \Call{Tri\_rapide}{$T, g, ip$} $
+         \State $T \gets \Call{Tri\_rapide}{$T, ip+1, d$} $
+    \EndIf
+    \State \Return $T$
+\EndFunction
+\\
+\Function{Partition}{$T,g,d$}
+    \State $pivot \gets T[g]$
+    \State $i \gets g-1$
+    \State $j \gets d+1$
+        \columnbreak
+    \While{$true$}
+    \Repeat
+    \State $j \gets j-1$
+    \Until{$T[j] <= pivot$}
+
+    \Repeat
+    \State $i \gets i+1$
+    \Until{$T[i] >= pivot$}
+    \If {$i < j$}
+    \State $T \gets \Call{Echanger}{$T, i, j$} $
+    \Else
+    \State \Return $j, T$
+    \EndIf
+        \EndWhile
+\EndFunction
+\end{multicols}
+\end{algorithmic}
+
+
+\item La boucle conditionnelle {\tt repeat ... until (condition)} n'existe pas en Matlab, proposez
+une solution de remplacement. N'oubliez pas de la tester à part.
+
+\item Implémenter l'algorithme suivant sous la forme d'une fonction Matlab. Son appel 
+A=tri\_rapide(A, 1, length(A)) retourne le tableau trié.
+
+
+\item Faites un programme appelant la fonction tri\_rapide permettant de trier des tableaux
+de taille $2^n$ où $n \in [1, 20]$.  En utilisant les fonctions {\tt tic} et {\tt toc} , stocker le temps CPU
+dans un tableau et finalement tracer l'évolution du temps de calcul en fonction de la taille.
+
+\item Vérifier qu'il varie en $N \ln N$ dans la limite des grandes valeurs de $N$.
+
+%\begin{figure}[h]
+%   \caption{\label{Algo} Algorithme Tri Rapide}
+%   \includegraphics[width=8cm]{Algo_Tri_Rapide}
+%\end{figure}
+
+\end{enumerate} 
+
+\section{Exercice : nombres premiers}
+
+On désire connaitre la liste $Lp$ des nombres premiers inférieurs à $N$ entier donné.
+\begin{enumerate} 
+\item Développer une fonction Matlab retournant cette liste.\\
+
+{\it Indication } : on peut construire la liste de manière dynamique sans allocation préalable.
+L'initialisation de la liste vide se fait par l'instruction {\tt Lp=[ ]} et l'insertion
+à droite d'un élément $e$ dans $Lp$ par {\tt Lp = [Lp, e]}.
+\end{enumerate} 
+ 
+ \section{Méthode de la puissance itérée}
+
+\subsection{Notations}
+
+On considère une matrice réelle symétrique ou hermitique $A$ de dimensions $n \times n$.
+Elle vérifie par conséquent la propriété $A=(A^t)^*$ où $*$ est l'opérateur de conjugaison
+complexe que l'on applique à chaque élément de $A^t$. On sait aussi que dans ce cas, $A$ est toujours diagonalisable dans $\mathbbm C$.
+
+On définit le produit scalaire de deux vecteurs  $| u\rangle=\left(x_1, x_2, \cdots, x_n \right)^t$ et $| v\rangle=\left(y_1, y_2, \cdots, y_n \right)^t$ par:
+\begin{equation}
+\langle v | u \rangle= \sum_{i=1}^{n} x_i \; y_i^*
+\end{equation}
+
+Supposons pour simplifier que le spectre de ses valeurs propres est non dégénéré.
+Autrement dit, à chaque valeur propre $\lambda_i$ correspond un s.e.v. de dimension 1,
+décrit par un vecteur propre $| u_i\rangle$.  La base formée par l'ensemble des vecteurs propres
+est orthogonale et peut être normée.
+
+
+On peut décomposer $A$ comme une somme de projecteurs :
+
+\begin{equation}
+A= \sum_{i=1}^{n} \lambda_i | u_i\rangle \langle u_i |
+\end{equation}
+
+\subsection{Recherche de la plus grande valeur propre en module}
+
+On désire dans un premier temps extraire la plus grande valeur propre en module que nous nommons 
+$\lambda_1$ et définir le
+vecteur propre associé $| u_1\rangle$ en utilisant une méthode itérative.
+
+Décrivons cet algorithme.
+On choisit d'abord un vecteur aléatoire $|x_0 \rangle$ de dimension $n$ sur lequel on applique $p$
+fois la matrice $A$. 
+
+A la première itération, on a :
+\begin{equation}
+|x_1 \rangle = A |x_0 \rangle = \sum_{i=1}^{n} \lambda_i | u_i\rangle \langle u_i |x_0 \rangle
+\end{equation}
+
+A l'itération $p$, on obtient :
+\begin{equation}
+|x_p \rangle = A^p |x_0 \rangle = \sum_{i=1}^{n} \lambda_i^p | u_i\rangle \langle u_i |x_0 \rangle
+\end{equation}
+
+que l'on peut développer suivant la forme suivante:
+\begin{equation}
+|x_p \rangle = A^p |x_0 \rangle =\lambda_1^p \left( \langle u_1 |x_0 \rangle \, | u_1\rangle 
++\left(\frac{\lambda_2}{\lambda_1}\right)^p \langle u_2 |x_0 \rangle \, | u_2\rangle +
+\cdots
++\left(\frac{\lambda_n}{\lambda_1}\right)^p \langle u_n |x_0 \rangle \, | u_n\rangle 
+\right) \end{equation}
+
+En remarquant que $|\frac{\lambda_i}{\lambda_1}| \leq 1$ et dans la limite des grandes valeurs
+de $p$, on observe que:
+\begin{equation}
+\lim_{p \rightarrow \infty}
+|x_p \rangle \propto \langle u_1 |x_0 \rangle \, | u_1\rangle  
+\end{equation}
+
+Le vecteur $|x_p \rangle$ tend à s'aligner vers le vecteur propre $|u_1 \rangle$.
+\subsection{Implémentation de la méthode en Matlab/Octave}
+
+\begin{enumerate}
+\item On donne ci-dessous un algorithme simplifié mettant en oeuvre la méthode de la puissance itérée.
+%\insertlisting{puissance.m}{puissance}
+
+
+\begin{algorithmic}[1]
+\begin{multicols}{2}
+       % \columnbreak
+\Function{puissance}{$A, x$}
+     \State $iter \gets 0$   
+\State $\epsilon \gets 10^{-6} $
+        \Repeat
+    \State $x0 \gets x$
+    \State $v \gets A \; x $
+    \State $x \gets v /  \Call{norm}{v} $  
+
+     \State $iter \gets iter+1$   
+         \Until{$\Call{norm}{x-x0} < \epsilon$}
+ \\           
+\State $\lambda \gets x^t\; A\;  x$ 
+    \State \Return $\lambda, x$
+\EndFunction
+\end{multicols}
+\end{algorithmic}
+
+
+\item Implémenter l'algorithme précédent sous la forme d'une fonction Matlab {\tt [lb, u] =puissance(A, x)} où A est une matrice de dimensions $n \times n$ et un vecteur colonne $x$ 
+non nul, de dimension $n$.
+Elle retourne deux variables 
+{\tt lb} et {\tt u} qui correspondent à la valeur propre $\lambda_1$ et au vecteur propre $|u_1 \rangle$.
+
+\item  Compléter le fichier $\tt{puissance.m} \rm$ avec un en-tête de commentaires résumant 
+l'usage de la fonction. 
+
+\item Tester son comportement depuis la fenêtre de commande, en prenant 
+$A =
+\left (
+\begin{array}{c c c} 1 & 2 & 3 \\ 2 & 1 & 2 \\ 3 & 2 & 1 \end{array}
+\right ) 
+$.
+
+\item Vérifier que les résultats sont cohérents avec ceux donnés par la fonction interne à
+Matlab $\tt{eig(A)} \rm$ et $\tt{[V, D] = eig(A)} \rm$. Commenter.
+\item Modifier la fonction pour recupérer le nombre d'itérations. Quel est l'intérêt de le faire?
+\item Exécuter de nouveau cette fonction en prenant comme matrice $-A$.  Commenter.
+
+\item Que se passe-t-il si la plus grande valeur propre en module est dégénérée? 
+La méthode fonctionne-t-elle encore dans ce cas?
+
+\item On peut générer une matrice aléatoire de grande taille avec la fonction {\tt rand(N, N)}
+dont la valeur de chaque élément est dans $[0, 1[$. Comment la rendre symétrique?
+
+\item Est-il raisonnable d'utiliser cet algorithme dans le cas d'une matrice non symétrique?
+
+\item Est-il raisonnable d'utiliser cet algorithme dans le cas d'une matrice hermitique?
+
+\item Modifier la fonction  {\tt [l, u] =puissance(A, x)} en imposant
+un nombre maximal d'itérations.  Quelles en sont les conséquences immédiates?
+
+\item Proposez une approche, même si elle n'est pas efficace, pour extraire la plus petite valeur propre en module d'une matrice.
+
+\item Montrer qu'en modifiant la ligne 6 de l'algorithme précédent, la plus petite valeur propre $\lambda_{min}$
+et son vecteur propre associé peuvent être calculés à condition touetfois que $\lambda_{min}>0$.
+
+\end{enumerate} 
+\end{document}
+
