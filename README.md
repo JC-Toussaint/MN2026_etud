@@ -112,7 +112,7 @@ $$I = \iint_D Q(x,y) \, dx \, dy = \sum_{e=1}^{NE} I_e$$
 Résolution de la forme forte de l'électrocinétique $	div (j) = 0 \implies 	div (-\sigma \nabla V) = 0$.
 
 * **Formulation Faible de Galerkin** :
-  $$\int_D \sigma \nabla \beta_i \cdot \nabla V \, d^3r = -\oiint_{\partial D} \beta_i j_n^s \, dS$$
+  $$\int_D \sigma \nabla \beta_i \cdot \nabla V \, d^3r = -\iint_{\partial D} \beta_i j_n^s \, dS$$
 * **Discrétisation et Assemblage Matriciel** :
   * Approximation spatiale $V(r) = \sum_{j} \alpha_j^e(r) V_j$.
   * Matrice de raideur élémentaire : $A_{ie, je}^e = \sum_{k=1}^{NPI} \sigma 
