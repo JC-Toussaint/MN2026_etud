@@ -67,7 +67,7 @@ ho$ et sa capacité calorifique $c_p$ :
 $$\rho c_p \frac{\partial T}{\partial t} - k_{th} \frac{\partial^2 T}{\partial x^2} = Q(x,t)$$
 
 * **Discrétisation spatio-temporelle** :
-  * Approximation du Laplacien spatial à l'ordre 2 : $$\frac{\partial^2 T}{\partial x^2}|_p = \frac{T_{p+1} + T_{p-1} - 2T_p}{\Delta x^2} + O(\Delta x^2)$$
+  * Approximation du Laplacien spatial à l'ordre 2 : $$\frac{\partial^2 T}{\partial x^2} = \frac{T_{p+1} + T_{p-1} - 2T_p}{\Delta x^2} + O(\Delta x^2)$$
   * Avancement temporel explicite d'ordre 1 : $$T_p^{n+1} = T_p^n + \frac{\Delta t}{ \rho c_p} \left( k_{th} \frac{T_{p+1}^n + T_{p-1}^n - 2T_p^n}{\Delta x^2} + Q_p^n \right)$$
 * **Analyse de stabilité de Von Neumann** :
   * Développement en séries de Fourier $\delta T_p = \sum_k \epsilon_k e^{i k p \Delta x}$.
