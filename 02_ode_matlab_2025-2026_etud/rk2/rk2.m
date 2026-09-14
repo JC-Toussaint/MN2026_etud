@@ -13,12 +13,13 @@ n=1;
 tvec(n) = t0;
 yvec(n, :) = y0;
 
-t = t0;
-y = y0;
+t = t0;   % tn
+y = y0;   % yn
 
 while (t<tf)  
-    % A COMPLETER
- 
+    tmid = t + h/2;
+    ymid = y + h/2*f(t, y); % y_mid = y_n + h/2 * f(tn, yn)
+    y = y + h*f(tmid, ymid);
     
     n=n+1;
 % pas suivant    
@@ -27,5 +28,5 @@ while (t<tf)
     tvec(n)=t;
     yvec(n, :)=y;
 end
-
+end
 

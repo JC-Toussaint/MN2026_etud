@@ -25,7 +25,7 @@ while (t<tf)
     
     tvec(n)=t;
     yvec(n)=y;
-end;
+end
 
 plot(tvec, yvec, 'bo-');
 hold on   % on garde le graphe

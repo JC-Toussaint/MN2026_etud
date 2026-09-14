@@ -14,22 +14,21 @@ n=1;
 tvec(n) = t0;
 yvec(n, :) = y0;
 
-t = t0;
+t = t0;  % a l'instant n
 y = y0;
 
-while (t<tf)  
-    f1=f(t, y);
-    dy=h*f1;    
-    y=y+dy;    
+while (t<tf)     
+    y = y + h*f(t, y);    
     
     n=n+1;
 % pas suivant    
     t=t+h;    
 
  % stockage    
-    tvec(n)=t;
+    tvec(n) = t;
     yvec(n, :)=y;
 
+end
 end
 
 

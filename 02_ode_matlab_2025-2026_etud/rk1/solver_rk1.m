@@ -1,10 +1,15 @@
-function solver_rk1
+% solver_rk1
 clc
 clear all
 close all
 
-param=[0 25 0.05];
-[T,Y] = rk1(@oscil,param,[1 0]);
+tf = 50; h = 0.05;
+param=[0 tf h]; % paramètres temporels
+
+x0 = 1; v0 =0; % conditions initiales
+Y0 = [x0 v0];
+[T,Y] = rk1(@oscil, param, Y0);
+
 plot(T,Y(:,1),'r+-',T,Y(:,2),'bo-')
 hold on
 

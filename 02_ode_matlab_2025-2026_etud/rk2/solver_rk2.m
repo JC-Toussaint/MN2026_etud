@@ -3,7 +3,7 @@ clc
 clear all
 close all
 
-param=[0 20 1.];
+param=[0 20 0.5];
 [T,Y] = rk2(@oscil,param,[1 0]);
 plot(T,Y(:,1),'r+-',T,Y(:,2),'bo-')
 hold on
