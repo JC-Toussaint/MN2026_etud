@@ -1,4 +1,4 @@
-function solver_rk2
+% solver_rk2 main program
 clc
 clear all
 close all

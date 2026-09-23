@@ -1,4 +1,4 @@
-% solver_rk1
+% solver_rk1 main program
 clc
 clear all
 close all

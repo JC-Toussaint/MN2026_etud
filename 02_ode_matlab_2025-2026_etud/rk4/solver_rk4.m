@@ -1,4 +1,4 @@
-function solver_rk4
+% solver_rk4 main program
 hold off
 figure(1)
 
