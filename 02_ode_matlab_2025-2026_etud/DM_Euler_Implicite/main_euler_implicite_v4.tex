@@ -1,0 +1,248 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{a4wide}
+\usepackage {graphicx}
+\usepackage[utf8]{inputenc} 
+\usepackage[francais]{babel}
+\usepackage{fancyhdr}
+\usepackage{setspace}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{extramarks}
+\usepackage{chngpage}
+\usepackage{soul}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx,float,wrapfig}
+\usepackage{ifthen}
+\usepackage{listings}
+\usepackage{courier}
+\usepackage{esint}
+\usepackage{bbm}
+\usepackage{graphics}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{epsfig}
+\usepackage{pgf,tikz}
+\usetikzlibrary{arrows}
+\usepackage{braket}
+\usepackage{MnSymbol,wasysym}
+\usepackage{marvosym}
+\usepackage{dsfont}
+\usepackage{esdiff}
+\usepackage{cancel}
+\usepackage{wrapfig}
+\usepackage{color}
+\usepackage{etoolbox}
+\usepackage[ruled, vlined, french, onelanguage]{algorithm2e}
+
+\pagestyle{fancy}
+\begin{document}
+
+\lhead{} 
+\chead{} 
+\rhead{\bfseries ODE} 
+\lfoot{JC Toussaint - Grenoble-INP Phelma}
+
+% --- Titre du sujet ---
+\begin{center}
+    \LARGE \bfseries Méthode d'Euler implicite
+\end{center}
+\vspace{0.5cm}
+
+Pour résoudre l'équation différentielle 
+\[
+\frac{dy}{dt} = f(t, y) \quad \text{avec} \quad y(t=0)=y_0
+\]
+où $y_0$ est le vecteur des inconnues à l'instant initial, on vous propose de mettre en œuvre un schéma d'Euler implicite :
+\[
+y_{n+1} = y_{n} + h f(t_{n+1}, y_{n+1})
+\]
+
+\begin{enumerate}
+    \item Après avoir écrit le schéma d'Euler explicite, donner, en une ligne, la différence entre les deux schémas.
+        
+\end{enumerate}
+
+\section{Cas de l'oscillateur harmonique}
+
+\begin{enumerate}[resume]
+    \item Dans le cas de l'oscillateur harmonique libre, la fonction $f(t,y)$ se simplifie. Que devient le schéma d'Euler implicite dans ce cas ?
+
+    \item On rappelle que les matrices $A$ et $(I-hA)^{-1}$ commutent et partagent donc la même base de vecteurs propres.
+    
+    Montrer que si $\lambda_i$ est une valeur propre de la matrice $A$ associée au vecteur propre $u_i$, alors $(1-h \lambda_i)^{-1}$ est la valeur propre de $(I-hA)^{-1}$ associée au même vecteur propre $u_i$.
+
+    \item Faire l'étude de stabilité du schéma d'Euler implicite et définir à chaque fois le domaine de stabilité en fonction du pas de temps $h$ selon les deux cas suivants :
+    \begin{itemize}
+        \item Toutes les valeurs propres de $A$ sont réelles négatives ($\lambda_i \in \mathbb{R}^-$).
+        \item Les valeurs propres de $A$ sont complexes à partie réelle négative ($\text{Re}(\lambda_i) < 0$).
+    \end{itemize}
+        
+\end{enumerate}
+
+\section{Cas général}
+
+    Dans le schéma explicite, l'évaluation de la fonction $f(t_n, y_n)$ utilise l'état connu $y_n$ à l'instant $t_n$, ce qui permet de calculer directement $y_{n+1}$ ; tandis que dans le schéma implicite, la fonction $f(t_{n+1}, y_{n+1})$ dépend de l'état inconnu $y_{n+1}$ à l'instant $t_{n+1}$, ce qui nécessite de résoudre une équation à chaque pas de temps.
+  
+\begin{enumerate}[resume]
+   \item Montrer que cette dernière s'écrit : 
+   \[
+K = h f(t_{n}+h, y_{n}+K)
+\]
+    Cette équation est-elle linéaire en général? 
+                
+\end{enumerate}
+
+\section{Algorithme du point fixe}
+
+Pour résoudre  $K = h f(t_n + h, y_n + K)$ où $K$ est l'inconnue, on met en oeuvre une méthode de résolution du point fixe:
+\[
+\begin{cases}
+K^{(0)} = h f(t_n + h, y_n) \\
+K^{(i+1)} = h f(t_n + h, y_n + K^{(i)}), \quad i \ge 0
+\end{cases}
+\]
+
+\begin{algorithm}[H]
+\SetKwData{KwK}{$K$}
+\SetKwData{KwKnext}{$K_{next}$}
+\SetKwData{KwTol}{$\varepsilon$}
+\SetKwData{KwNmax}{$N_{\max}$}
+\SetKwData{KwIter}{$i$}
+\SetKwData{KwConv}{$converge$}
+
+\SetKwInOut{Input}{Entrées}
+\SetKwInOut{Output}{Sortie}
+
+\Input{La fonction $f(t, y)$\\
+ $t_n, y_n$ : état au temps $t_n$\\
+ $h$ : pas de temps\\
+ \KwTol : tolérance de convergence\\
+ \KwNmax : nombre maximal d'itérations}
+\Output{L'approximation de $K$}
+
+\BlankLine
+\KwIter $\leftarrow 0$\;
+\KwK $\leftarrow h \cdot f(t_n + h, y_n)$ \tcp*{Initialisation $K^{(0)}$}
+\KwConv $\leftarrow$ \textbf{faux}\;
+
+\While{\KwIter $< \KwNmax$ \textbf{et non} \KwConv}{
+    \KwKnext $\leftarrow h \cdot f(t_n + h, y_n + \KwK)$ \tcp*{Calcul de $K^{(i+1)}$}
+    \If{$|\KwKnext - \KwK| < \KwTol$}{
+        \KwConv $\leftarrow$ \textbf{vrai}\;
+    }
+    \KwK $\leftarrow \KwKnext$\;
+    \KwIter $\leftarrow \KwIter + 1$\;
+}
+
+\If{\textbf{non} \KwConv}{
+    \ShowLn \textbf{Avertissement :} Le nombre maximal d'itérations a été atteint sans convergence.\;
+}
+
+\Return{\KwK}\;
+\caption{Méthode du point fixe pour $K = h f(t_n + h, y_n + K)$}
+\end{algorithm}
+
+
+\begin{enumerate}[resume]
+
+   \item Etudier l'algorithme en vue de son implémentation en Matlab.
+   \end{enumerate}
+   
+   \section{Convergence de la méthode du point fixe}
+   
+\begin{enumerate}[resume]
+   \item On pose $g(K) = h f(t_n+h, y_n+K)$, de sorte que l'itération du point fixe s'écrit $K^{(i+1)} = g(K^{(i)})$.
+
+   \begin{enumerate}
+       \item Rappeler, dans le cas scalaire, la condition portant sur $g'$ qui garantit la convergence locale de la méthode du point fixe vers la solution $K^*$ de $K = g(K)$.
+
+       \begin{quote}
+       \textbf{Réponse.} La méthode du point fixe $K^{(i+1)} = g(K^{(i)})$ converge localement vers la solution $K^*$ de $K = g(K)$ si
+       \[
+       |g'(K^*)| < 1
+       \]
+       (plus précisément, s'il existe un voisinage de $K^*$ sur lequel $|g'(K)| \le k < 1$).
+
+       \textit{Démonstration.} On définit l'erreur à l'itération $i$ :
+       \[
+       e_i = K^{(i)} - K^*
+       \]
+       Comme $g$ est dérivable, le théorème des accroissements finis donne, entre $K^{(i)}$ et $K^*$, l'existence d'un point $\xi_i$ tel que :
+       \[
+       g(K^{(i)}) - g(K^*) = g'(\xi_i)\,(K^{(i)} - K^*)
+       \]
+       Or $K^{(i+1)} = g(K^{(i)})$ et $K^* = g(K^*)$ (par définition du point fixe), donc :
+       \[
+       K^{(i+1)} - K^* = g'(\xi_i)\,(K^{(i)} - K^*)
+       \]
+       c'est-à-dire :
+       \[
+       e_{i+1} = g'(\xi_i)\, e_i
+       \]
+
+       Si $g'$ est continue et $|g'(K^*)| < 1$, alors par continuité il existe un voisinage $V$ de $K^*$ et une constante $k<1$ tels que $|g'(K)| \le k$ pour tout $K \in V$. Tant que les itérées restent dans $V$, on a $\xi_i \in V$ et donc :
+       \[
+       |e_{i+1}| = |g'(\xi_i)|\,|e_i| \le k\,|e_i|
+       \]
+       En itérant cette inégalité depuis $i=0$ :
+       \[
+       |e_i| \le k^i \, |e_0|
+       \]
+       Comme $0 \le k < 1$, on a $k^i \to 0$ quand $i \to \infty$, donc $K^{(i)} \to K^*$ : la suite des itérées converge géométriquement vers le point fixe, avec un taux de convergence borné par $k \approx |g'(K^*)|$.
+
+       \textit{Remarque.} Si $|g'(K^*)| > 1$, le même raisonnement montre que $|e_{i+1}| > |e_i|$ au voisinage de $K^*$ : toute perturbation initiale est amplifiée et la méthode diverge.
+       \end{quote}
+
+       \item En déduire, dans ce cas scalaire, un critère de convergence portant sur $h$ et sur $\partial f/\partial y$.
+
+       \begin{quote}
+       \textbf{Réponse.} Puisque $g(K) = h f(t_n+h, y_n+K)$, on dérive par rapport à $K$ :
+       \[
+       g'(K) = h \, \frac{\partial f}{\partial y}(t_n+h,\, y_n+K)
+       \]
+       En appliquant le critère de la question précédente au point fixe $K^*$, la condition $|g'(K^*)| < 1$ devient :
+       \[
+       \left| h \, \frac{\partial f}{\partial y}(t_n+h,\, y_n+K^*) \right| < 1
+       \]
+       c'est-à-dire, en posant $L = \left| \dfrac{\partial f}{\partial y}(t_n+h,\, y_n+K^*) \right|$ :
+       \[
+       h < \frac{1}{L}
+       \]
+       Le critère de convergence porte donc directement sur le pas de temps $h$ : la méthode du point fixe converge à condition que $h$ soit choisi suffisamment petit devant l'inverse de la dérivée partielle de $f$ par rapport à $y$, évaluée au voisinage de la solution. Plus $f$ varie rapidement avec $y$ (grand $L$), plus $h$ doit être petit pour assurer la convergence.
+       \end{quote}
+
+       \item Généraliser ce critère au cas vectoriel ($y \in \mathbb{R}^n$), en faisant intervenir la matrice jacobienne $J_f = \partial f/\partial y$ évaluée en $(t_n+h, y_n+K^*)$.
+
+       \begin{quote}
+       \textbf{Réponse.} Lorsque $y \in \mathbb{R}^n$, $K$ est également un vecteur de $\mathbb{R}^n$ et $g(K) = h f(t_n+h, y_n+K)$ est une fonction vectorielle. La dérivée $g'$ est alors remplacée par la matrice jacobienne de $g$ par rapport à $K$ :
+       \[
+       J_g(K) = h \, J_f(t_n+h,\, y_n+K), \qquad J_f = \frac{\partial f}{\partial y}
+       \]
+       En reprenant le raisonnement de la question 6.a au premier ordre, l'erreur $e_i = K^{(i)} - K^*$ vérifie approximativement :
+       \[
+       e_{i+1} \approx J_g(K^*)\, e_i = h\, J_f(t_n+h,\, y_n+K^*)\, e_i
+       \]
+       et après $i$ itérations, $e_i \approx \left[h J_f(t_n+h, y_n+K^*)\right]^i e_0$. Cette quantité tend vers $0$ si et seulement si le rayon spectral de la matrice $h J_f$ est strictement inférieur à $1$ :
+       \[
+       \rho\big(h\, J_f(t_n+h,\, y_n+K^*)\big) < 1
+       \]
+       où $\rho(M) = \max\{|\lambda| : \lambda \text{ valeur propre de } M\}$. C'est la généralisation naturelle de la condition scalaire $hL<1$ : le rôle de $|\partial f/\partial y|$ est joué par le rayon spectral de la jacobienne $J_f$. En pratique, une condition suffisante plus simple à vérifier consiste à majorer une norme matricielle induite :
+       \[
+       h \, \|J_f(t_n+h,\, y_n+K^*)\| < 1
+       \]
+       qui garantit $\rho(hJ_f) \le h\|J_f\| < 1$, donc la convergence.
+
+       En pratique, selon la norme vectorielle choisie, on obtient par exemple :
+       \begin{itemize}
+           \item norme $\|\cdot\|_\infty$ (max des lignes) : $\|M\|_\infty = \displaystyle\max_{1 \le i \le n} \sum_{j=1}^n |M_{ij}|$
+           \item norme $\|\cdot\|_1$ (max des colonnes) : $\|M\|_1 = \displaystyle\max_{1 \le j \le n} \sum_{i=1}^n |M_{ij}|$
+       \end{itemize}
+       N'importe laquelle de ces normes induites peut être utilisée dans le critère $h\|J_f\|<1$ : il s'agit d'une condition suffisante, plus simple à évaluer que le rayon spectral exact.
+       \end{quote}
+   \end{enumerate}
+
+   \end{enumerate}
+\end{document}
