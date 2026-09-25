@@ -23,3 +23,5 @@ plot(t,s,'r',t,ds_dt,'b')
 legend({'position','vitesse'})
 xlabel('t')
 grid on
+
+

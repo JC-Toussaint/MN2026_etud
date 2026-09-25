@@ -17,12 +17,11 @@ t = t0;   % tn
 y = y0;   % yn
 
 while (t<tf)  
-    tmid = t + h/2;
-    ymid = y + h/2*f(t, y); % y_mid = y_n + h/2 * f(tn, yn)
-    y = y + h*f(tmid, ymid);
-    
+
+    % A COMPLETER 
+        
+% pas suivant   
     n=n+1;
-% pas suivant    
     t=t+h;   
  % stockage    
     tvec(n)=t;

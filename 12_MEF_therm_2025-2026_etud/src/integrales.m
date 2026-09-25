@@ -1,3 +1,4 @@
+function [AE,BE]= integrales(fem, ne)
 % [AE,BE]= integrales(fem, ne)
 % Calcul des matrices elementaires AE et BE
 % Entree/
@@ -5,8 +6,6 @@
 % Sortie/
 % matrice elementaire AE et vecteur elementaire BE
 
-function [AE,BE]= integrales(fem, ne)
-% fem.elt(ne) : element en cours de traitement
 % recuperer les poids et abscisses en fonction du type d elements
 % polynomes de Lagrange associes a ses noeuds ainsi que leurs
 % gradients
@@ -42,21 +41,6 @@ switch (e.TYP)
         %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
         %%% A COMPLETER %%%
         %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
-        for ie=1:NBN
-            for je=1:NBN
-                % pas besoin d'init AE
-                for k=1:NPI
-                    AE(ie, je) = AE(ie, je) + ...
-                        detJ(k)*pds(k) * hcv*alpha(ie, k)*alpha(je, k);
-                end
-            end
-        end
-        
-        for ie=1:NBN
-            for k=1:NPI
-                BE(ie) = BE(ie) + detJ(k)*pds(k) * hcv*alpha(ie, k)*Ta;
-            end
-        end
         
     case 2 % cas surfacique
         % chargement des polynomes de Lagrange
@@ -84,24 +68,8 @@ switch (e.TYP)
         %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
         %%% A COMPLETER %%%
         %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
-        for ie=1:NBN
-            for je=1:NBN
-                % pas besoin d'init AE
-                for k=1:NPI
-                    ggk = dalpha_dx(ie, k) * dalpha_dx(je, k) + ...
-                          dalpha_dy(ie, k) * dalpha_dy(je, k);
-                    AE(ie, je) = AE(ie, je) + ...
-                        detJ(k)*pds(k) * kth * ggk;
-                end
-            end
-        end
-        
-        for ie=1:NBN
-            for k=1:NPI
-                BE(ie) = BE(ie) + detJ(k)*pds(k) * alpha(ie, k)*qth;
-            end
-        end
-end
+
+end % switch
 
 end
 

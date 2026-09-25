@@ -30,14 +30,9 @@ switch (e.TYP)
         detJ=gauss.detJ;	% detJ(k)
         alpha=gauss.alpha; 	% alpha(ie, k)
         
-        % A COMPLETER
-        % PAS de contribution dans AE
-        for ie=1:NBN
-            % BE deja initialisé
-            for k=1:NPI
-                BE(ie) = BE(ie) -alpha(ie, k)*jn *detJ(k)*pds(k);
-            end            
-        end
+        %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
+        %%% A COMPLETER %%%
+        %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
             
         
     case 2 % cas surfacique
@@ -54,19 +49,9 @@ switch (e.TYP)
         dalpha_dx=gauss.dalpha_dx; 	% dalpha_dx(ie, k)
         dalpha_dy=gauss.dalpha_dy; 	% dalpha_dy(ie, k)
         
-        % A COMPLETER
-        % Pas de contribution dans BE
-        for ie=1:NBN
-            for je=1:NBN
-                % AE deja initialisé
-                for k=1:NPI
-                    ggk = dalpha_dx(ie, k)*dalpha_dx(je, k) + ...
-                          dalpha_dy(ie, k)*dalpha_dy(je, k);
-                    AE(ie, je) = AE(ie, je) + ...
-                        sigma * ggk *detJ(k) *pds(k);
-                end % k in [1, NPI]
-            end
-        end
+        %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
+        %%% A COMPLETER %%%
+        %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
         
 end
 

@@ -5,8 +5,8 @@ clear all   % efface la memoire
 close all   % ferme les fenetres graphiques
 
 tf=2.;
-h =0.1;
-y0=1;
+h =0.2;
+y0=1;  % condition initiale
 
 % stockage
 n=1;
@@ -14,10 +14,12 @@ tvec(n)=0;
 yvec(n)=y0;
 
 % initialisation
-t=0;
-y=y0;
+t=0;   % valeur courante du temps
+y=y0;  % valeur courante de y
 
 while (t<tf)
+    % schema d'Euler
+    % y_n+1 = y_n -h * y_n^2
     y = y -h*y*y;
     
     n=n+1;
@@ -35,3 +37,6 @@ hold on   % on garde le graphe
 t=0:0.01:tf;
 yana=1./(t+1);
 plot(t, yana, 'r');
+
+
+

@@ -2,7 +2,7 @@
 % methode d'Euler explicite ordre 1
 %
 
-function [tvec, yvec]=rk1(f, param, y0, options)
+function [tvec, yvec]=rk1(f, param, y0)
 % intervalle d'etude en temps et pas
 t0 = param(1);
 tf = param(2);
@@ -17,11 +17,14 @@ yvec(n, :) = y0;
 t = t0;  % a l'instant n
 y = y0;
 
-while (t<tf)     
-    y = y + h*f(t, y);    
+while (t<tf)  
+    % schema euler
+    % y_n+1 = y_n + h f(t_n, y_n)
     
-    n=n+1;
-% pas suivant    
+    % A COMPLETER   
+    
+    % pas suivant 
+    n=n+1;   
     t=t+h;    
 
  % stockage    
@@ -29,6 +32,7 @@ while (t<tf)
     yvec(n, :)=y;
 
 end
+return % optionnel
 end
 
 

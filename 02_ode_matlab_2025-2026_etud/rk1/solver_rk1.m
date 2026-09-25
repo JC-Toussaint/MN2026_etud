@@ -3,7 +3,7 @@ clc
 clear all
 close all
 
-tf = 50; h = 0.05;
+tf = 100; h = 0.41;
 param=[0 tf h]; % paramètres temporels
 
 x0 = 1; v0 =0; % conditions initiales

@@ -53,11 +53,6 @@ else
     
     for nrg=1:fem.NRG        
 %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%     
-% A ADAPTER
-        fem.equ.kth(nrg) =fscanf(fich,'%f',[1]);
-        fem.equ.qth(nrg) =fscanf(fich,'%f',[1]);
-        fem.equ.hcv(nrg) =fscanf(fich,'%f',[1]);
-        fem.equ.Ta(nrg)  =fscanf(fich,'%f',[1]);
 % A COMPLETER
 
 %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
@@ -76,5 +71,6 @@ else
     
     fclose(fich);
     err = 0;
+end
 end
 

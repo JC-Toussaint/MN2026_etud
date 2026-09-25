@@ -1,4 +1,4 @@
-function dy_dt = oscil(t, y)
+function dy_dt = oscil(t, y)  % y vecteur ligne de dim 2
 dy_dt = zeros(1,2);    % vecteur ligne
 
 % 1er cas

@@ -1,14 +1,13 @@
+function fem=solution(fem)
 % fem = solution(fem)
 % Calcul de la solution de l'equation de la chaleur
 % Entree et Sortie/
 % structure fem 
-    
-function fem=solution(fem)
 
 %initialisation  
-NP=fem.NP;  % nb total de noeuds
-A=sparse(NP, NP); % matrice creuse vide
-B=zeros(NP, 1);	  
+NP = fem.NP;  % nb total de noeuds
+A = sparse(NP, NP); % matrice creuse vide
+B = zeros(NP, 1);	  
 
 %INTEGRATION ET ASSEMBLAGE 
 NE=fem.NE;

@@ -1,3 +1,4 @@
+function [AE,BE]= integrales(fem, ne)  
 % [AE,BE]= integrales(fem, ne) 
 % Calcul des matrices elementaires AE et BE
 % Entree/
@@ -5,7 +6,6 @@
 % Sortie/
 % matrices elementaires AE et BE
 
-function [AE,BE]= integrales(fem, ne)  
 % fem.elt(ne) : element en cours de traitement
 % recuperer les poids et abscisses en fonction du type d elements
 % polynomes de Lagrange associes a ses noeuds ainsi que leurs

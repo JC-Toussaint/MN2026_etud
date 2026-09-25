@@ -33,8 +33,8 @@ else
   
    %Lecture du nombre de regions et des affectations
     comment  = fscanf(fich,'%s',[1]);
-    fem.NREG = fscanf(fich,'%d',[1]);
-    for nreg=1:fem.NREG
+    fem.NRG = fscanf(fich,'%d',[1]);
+    for nreg=1:fem.NRG
         fem.equ.sigma(nreg)=fscanf(fich,'%f',[1]);
         fem.equ.jn(nreg)   =fscanf(fich,'%f',[1]);
     end

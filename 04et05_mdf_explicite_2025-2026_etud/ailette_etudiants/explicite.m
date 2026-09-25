@@ -32,22 +32,24 @@ deltat   = simul.deltat;
 tfinal   = simul.tfinal;
 
 % Nombre total de noeuds
-N=round(longueur/deltax+1);
+NP=round(longueur/deltax+1);
 
 % allocations et initialisations a zero
-Tprec = zeros(N,1);    % valeurs aux noeuds de l'inconnu a l'instant n
-T     = zeros(N,1);    % valeurs aux noeuds de l'inconnu a l'instant n+1
-x=[0:N-1]*deltax;      % abscisses reelles des noeuds
+Tprec = zeros(NP,1);
+T     = zeros(NP,1);
+x     = zeros(NP,1);
 
-% Nombre total de pas de temps
-nt=round(tfinal/deltat+1);
-Tn=zeros(N,nt);
+x=[0:NP-1]*deltax;
 
 Tprec(:)=simul.Tinit;
 
+%sauvegarde du vecteur colonne Tprec(:) 
+%dans la 1ere colonne de la matrice Tn
+Tn=Tprec(:);
+
 % Boucle sur le temps
-inc=1;
-for t=0:deltat:tfinal
+t=0;
+while t<tfinal
    
 	% Initialisation : CAL a gauche
 	if phys.type_cl_gauche=='DIRICHLET'		
@@ -61,7 +63,7 @@ for t=0:deltat:tfinal
    end
 
    % Points interieurs du maillage
-   for p=2:N-1
+   for p=2:NP-1
         % A COMPLETER
    end
 
@@ -69,16 +71,16 @@ for t=0:deltat:tfinal
 	if phys.type_cl_droite=='DIRICHLET'  
         % CAL de Dirichlet
         Tdd = phys.Tdd;
-        x(N)=(N-1)*deltax;
-        T(N)=Tdd;
+        x(NP)=(NP-1)*deltax;
+        T(NP)=Tdd;
     else
         % CAL de Neumann a droite       
         % A COMPLETER
     end
 
 	% stockage des differents pas de temps
-	Tprec(:)=T(:);
-    Tn(:,inc)=T(:);
-	inc=inc+1;
+    t=t+deltat;
+    Tprec(:) = T(:); % (:) notation pas necessaire
+    Tn = [Tn T(:)];  % ajout a droite du vecteur colonne T
 end
 

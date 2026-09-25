@@ -11,38 +11,36 @@ function [x,Tn]=implicite(phys,simul)
 %           temporelles , la température initiale et la vitesse
 %
 
-%changement de variable pour plus de lisibilite
-longueur=simul.longueur;
-deltax=simul.deltax;
-deltat=simul.deltat;
-tfinal=simul.tfinal;
+% parametres materiaux
+kth = phys.kth;
+rho = phys.rho;
+cp  = phys.cp;
 
-N=round(longueur/deltax+1);
+% parametres simuls
+longueur = simul.longueur;
+deltax   = simul.deltax;
+deltat   = simul.deltat;
+tfinal   = simul.tfinal;
 
-% Initialisation t=0
-Tprec=zeros(N,1);
+% Nombre total de noeuds
+NP=round(longueur/deltax+1);
+
+% allocations et initialisations a zero
+Tprec = zeros(NP,1);
+T     = zeros(NP,1);
+x     = zeros(NP,1);
+
+x=[0:NP-1]*deltax;
+
 Tprec(:)=simul.Tinit;
 
-% declaration du systeme creux
-A =sparse(N,N); % matrice du 1er membre
-b =zeros(N,1);  % vecteur du 2nd membre
-
-T=zeros(N,1);
-x=[0:N-1]*deltax;
-
-% nombre de pas de temps
-nt=round(tfinal/deltat+1);
-Tn=zeros(N,nt);
+%sauvegarde du vecteur colonne Tprec(:) 
+%dans la 1ere colonne de la matrice Tn
+Tn = Tprec(:);
 
 % Boucle sur le temps
-inc=1;
-
-%changement de variable pour plus de lisibilite
-kth = phys.kth; % conductivite thermique
-rho = phys.rho; % masse volumique
-cp = phys.cp;   % capacite calorifique
-
-for t=0:deltat:tfinal
+t=0;
+while t<tfinal
    
 	% Initialisation : CAL a gauche
 	if phys.type_cl_gauche=='DIRICHLET'		
@@ -54,35 +52,38 @@ for t=0:deltat:tfinal
         % CAL de Neumann
         hg  = phys.hg;
         Tag = phys.Tag;
-        
+        %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
+        % A COMPLETER
+        %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%        
 	end
 
 	% Points interieurs du maillage
-	for p=2:N-1
-        A(p, p-1) =  -kth/deltax^2;
-        A(p, p  ) = 2*kth/deltax^2 + rho*cp/deltat;
-        A(p, p+1) =  -kth/deltax^2;
-        b(p) = rho*cp/deltat * Tprec(p);
+	for p=2:NP-1
+        %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
+        % A COMPLETER
+        %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
 	end
 
 	% Initialisation : CAL a droite
 	if phys.type_cl_droite=='DIRICHLET'  
         % CAL de Dirichlet
-   	    x(N)=(N-1)*deltax;
-		A(N, N)=1;
+   	    x(NP)=(NP-1)*deltax;
+		A(NP, NP)=1;
         
-   	    b(N)=phys.Tdd;
+   	    b(NP)=phys.Tdd;
     else
         % CAL de Neumann
+        %%% DEBUT DU BLOC A RECOPIER DANS VOTRE COPIE %%%
         % A COMPLETER
+        %%% FIN DU BLOC A RECOPIER DANS VOTRE COPIE %%%
 	end
 
 	%Resolution du systeme [A][T]=[b]
 	T=A\b;
     
 	% stockage des differents pas de temps
-	Tprec(:)=T(:);
-    Tn(:,inc)=T(:);
-	inc=inc+1;
+    t = t+deltat;
+    Tprec(:) = T(:); % (:) notation pas necessaire
+    Tn = [Tn T(:)];  % ajout a droite du vecteur colonne T
 end
 

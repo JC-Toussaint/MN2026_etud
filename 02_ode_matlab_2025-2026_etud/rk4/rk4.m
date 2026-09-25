@@ -21,14 +21,15 @@ y = y0;
  
 while (t<tf)  
     % A COMPLETER
-    
-    n=n+1;
  
-% pas suivant    
+% pas suivant  
+    n=n+1;
     t=t+h;    
 % stockage    
     tvec(n)=t;
     yvec(n, :)=y;    
+end
+
 end
 
 
