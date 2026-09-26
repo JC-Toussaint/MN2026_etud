@@ -20,7 +20,6 @@ y = y0;
 while (t<tf)  
     % schema euler
     % y_n+1 = y_n + h f(t_n, y_n)
-    
     % A COMPLETER   
     
     % pas suivant 

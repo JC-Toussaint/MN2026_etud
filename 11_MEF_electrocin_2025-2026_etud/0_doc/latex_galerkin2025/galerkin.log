@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.10)  2 OCT 2025 09:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2022.12.10)  26 SEP 2026 15:09
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -603,10 +603,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 497--500
  []
 
 Package epstopdf Info: Source file: <matP.eps>
-(epstopdf)                    date: 2018-11-22 20:59:46
-(epstopdf)                    size: 37497 bytes
+(epstopdf)                    date: 2026-09-23 09:21:03
+(epstopdf)                    size: 38128 bytes
 (epstopdf)             Output file: <matP-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-11-22 20:59:46
+(epstopdf)                    date: 2026-09-23 09:21:03
 (epstopdf)                    size: 12996 bytes
 (epstopdf)             Command: <repstopdf --outfile=matP-eps-converted-to.pdf 
 matP.eps>
@@ -674,7 +674,7 @@ exlive/2022/texmf-dist/fonts/type1/public/esint-type1/esint10.pfb><c:/texlive/2
 022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><c:/texlive/2022/
 texmf-dist/fonts/type1/public/stmaryrd/stmary10.pfb><c:/texlive/2022/texmf-dist
 /fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on galerkin.pdf (8 pages, 388577 bytes).
+Output written on galerkin.pdf (8 pages, 389000 bytes).
 PDF statistics:
  141 PDF objects out of 1000 (max. 8388607)
  81 compressed objects within 1 object stream
