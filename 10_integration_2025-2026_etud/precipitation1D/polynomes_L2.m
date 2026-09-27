@@ -41,9 +41,9 @@ for ie=1:NBN % I puis II
 end
 
 
-for k=1:NPI % boucle sur les points de Gauss
-    x = 0.;
-    dx_du = 0.;
+for k=1:NPI      % boucle sur les points de Gauss
+    x = 0.;      % abscisse réel du point de Gauss k
+    dx_du = 0.;  % det jacobien  au point de Gauss k
     for ie = 1:NBN
         x=x+alpha(ie, k)*xp(ie);
         dx_du = dx_du + dalpha_du(ie, k)*xp(ie);
@@ -65,6 +65,7 @@ gauss.pds=pds;		% tableau = valeur de w(k)
 gauss.alpha=alpha;	% matrice = gauss.alpha(ie, k) ie dans {I, II}, k dans [1, gauss.NPI]
 
 gauss.x=xg;		% tableau = gauss.x(k) abscisse du point de Gauss k dans l'element reel
+end
 
 
 
